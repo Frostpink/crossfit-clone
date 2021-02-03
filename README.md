@@ -8,6 +8,8 @@ Chloé Dumas | 300072427 | dduma032@uottawa.ca
 
 J'ai utilisé LucidChart pour faire les diagrammes.
 
+J'ai utilisé Postgres pour la base de données
+
 Un athlète aura les propriétés suivantes 
 - id
 - name
@@ -28,13 +30,13 @@ Un athlète aura les propriétés suivantes
 
 La base de données a été créé avec Postgres.
 
-```
+```sql
 CREATE DATABASE crossfit;
 ```
 
 La ligne SQL suivante va créer le schema athletes.
 
-```
+```sql
 CREATE TABLE IF NOT EXISTS athletes (
     id VARCHAR(20) PRIMARY KEY,
     name VARCHAR(200),
@@ -51,7 +53,7 @@ CREATE TABLE IF NOT EXISTS athletes (
 
 La ligne SQL suivante ajoute 7 athletes dans la table 'athletes'
 
-```
+```sql
 INSERT INTO athletes (id, name, date_of_birth, gender, height, weight) 
 VALUES 
     ('1', 'Sansone Donaway',  '2000-05-24', 'male',       171.4, 89.6),
@@ -79,7 +81,7 @@ id | name | date_of_birth | gender | height | weight
 
 La ligne SQL suivante mets à jour la grandeur de l'athlete avec id = 1 (Sansone Donaway)
 
-```
+```sql
 UPDATE athletes
 SET height = 172.8
 WHERE id = '1';
@@ -101,13 +103,13 @@ id | name | date_of_birth | gender | height | weight
 
 La ligne SQL suivante affiche tous les athletes
 
-```
+```sql
 SELECT * FROM athletes;
 ```
 
 Cette ligne affiche en ordre croissant par nom
 
-```
+```sql
 SELECT * FROM athletes ORDER BY name ASC;
 ```
 
@@ -125,7 +127,7 @@ id | name | date_of_birth | gender | height | weight
 
 Cette ligne affiche en ordre par age (plus jeune au plus vieux)
 
-```
+```sql
 SELECT * FROM athletes ORDER BY date_of_birth DESC;
 ```
 
@@ -145,7 +147,7 @@ id | name | date_of_birth | gender | height | weight
 
 La ligne SQL suivante efface l'athlete avec id = 3 (Kippy Toman)
 
-```
+```sql
 DELETE FROM athletes
 WHERE id = '3';
 ```
