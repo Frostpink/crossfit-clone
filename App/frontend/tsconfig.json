@@ -20,9 +20,10 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
-    "paths": {
-      "@Components/*": [ "src/components/*" ],
-    }
+    // "paths": {
+      // "@Components/*": [ "src/components/*" ],
+      // "@Models/*": [ "src/models/*" ]
+    // }
   },
   "include": [
     "src"
