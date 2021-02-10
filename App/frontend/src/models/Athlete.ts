@@ -1,7 +1,7 @@
 export default interface IAthlete {
     id: string
     name: string
-    dateOfBirth: Date
+    date_of_birth: Date
     gender: string
     height: number
     weight: number
