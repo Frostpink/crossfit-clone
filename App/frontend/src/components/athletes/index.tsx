@@ -9,6 +9,7 @@ import Table from 'react-bootstrap/Table'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
+import { getAge } from 'Helper'
 
 export default function AthleteList() {
 
@@ -17,7 +18,17 @@ export default function AthleteList() {
 
     const fetchData = async (sort='id') => {
 
-        const result = await axios(`http://localhost:8080/athletes?sort=${sort}&get=id,name,gender,height,weight`)
+        const result = await axios.get<IAthlete[]>(`http://localhost:8080/athletes?sort=${sort}&get=id,name,gender,height,weight,date_of_birth`).then((response => {
+
+            response.data.map((athlete: IAthlete) => {
+
+                athlete.age = getAge(athlete.date_of_birth)
+
+            })
+
+            return response
+
+        }))
 
         setAthletes(result.data)
 
@@ -58,6 +69,8 @@ export default function AthleteList() {
                         <th>Gender</th>
                         <th>Height (cm)</th>
                         <th>Weight (kg)</th>
+                        <th>Date Of Birth</th>
+                        <th>Age</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,6 +81,8 @@ export default function AthleteList() {
                             <td>{athlete.gender}</td>
                             <td>{athlete.height}</td>
                             <td>{athlete.weight}</td>
+                            <td>{athlete.date_of_birth}</td>
+                            <td>{athlete.age}</td>
                         </tr>
                     ))}
                 </tbody>

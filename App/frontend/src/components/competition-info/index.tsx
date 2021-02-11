@@ -10,6 +10,7 @@ import BContainer from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import BCard from 'react-bootstrap/Card'
+import { formatDate } from 'Helper'
 
 const CRow = styled.div`
     display: flex;
@@ -28,29 +29,19 @@ const Card = styled(BCard)`
 
 export default function () {
 
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
     const [athletes, setAthletes] = useState<IAthlete[]>([])
     const [competition, setCompetition] = useState<ICompetition>({} as ICompetition)
 
     const fetchData = async () => {
 
-        const resultAthletes = await axios(`http://localhost:8080/participants/${id}`)
-        const resultCompetition = await axios(`http://localhost:8080/competitions/${id}`)
+        const resultAthletes = await axios.get<IAthlete[]>(`http://localhost:8080/participants/${id}`)
+        const resultCompetition = await axios.get<ICompetition[]>(`http://localhost:8080/competitions/${id}`)
 
-        let date, dateFormat
+        let comp = resultCompetition.data[0]
+        comp.start_date_time = formatDate(comp.start_date_time)
+        comp.end_date_time = formatDate(comp.end_date_time)
 
-        // format dates on competition
-        const competition: ICompetition = resultCompetition.data[0]
-        date = new Date(competition.start_date_time)
-        dateFormat = `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
-        competition.start_date_time = dateFormat
-
-        date = new Date(competition.end_date_time)
-        dateFormat = `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
-        competition.end_date_time = dateFormat
-
-        setCompetition(competition)
+        setCompetition(comp)
 
         setAthletes(resultAthletes.data)
 

@@ -9,6 +9,7 @@ import Table from 'react-bootstrap/Table'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
+import { formatDate } from 'Helper'
 
 export default function () {
 
@@ -19,19 +20,11 @@ export default function () {
 
     const fetchData = async (sort='id') => {
 
-        const result = await axios(`http://localhost:8080/competitions?sort=${sort}&get=id,name,venue,start_date_time,end_date_time`)
+        const result = await axios.get<ICompetition[]>(`http://localhost:8080/competitions?sort=${sort}&get=id,name,venue,start_date_time,end_date_time`)
 
         result.data.map((comp: ICompetition) => {
-            let date = new Date(comp.start_date_time)
-            console.log(date)
-            let dateFormat = `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
-            comp.start_date_time = dateFormat
-        })
-        result.data.map((comp: ICompetition) => {
-            let date = new Date(comp.end_date_time)
-            console.log(date.getDate())
-            let dateFormat = `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
-            comp.end_date_time = dateFormat
+            comp.start_date_time = formatDate(comp.start_date_time)
+            comp.end_date_time = formatDate(comp.end_date_time)
         })
 
 

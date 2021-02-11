@@ -10,6 +10,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import BCard from 'react-bootstrap/Card'
 
+import { formatDate, getAge } from 'Helper'
+
 const CRow = styled.div`
     display: flex;
     flex-direction: row;
@@ -27,20 +29,16 @@ const Card = styled(BCard)`
 
 export default function AthleteInfo() {
 
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
     const [athlete, setAthlete] = useState<IAthlete>({} as IAthlete)
 
     const fetchData = async () => {
 
-        const result = await axios(`http://localhost:8080/athletes/${id}`)
+        const result = await axios.get<IAthlete[]>(`http://localhost:8080/athletes/${id}`)
 
         let athlete = result.data[0]
 
-        const date = new Date(athlete.date_of_birth)
-        const dateFormat = `${monthNames[date.getMonth()]} ${date.getDay()}, ${date.getFullYear()}`
-
-        athlete.date_of_birth = dateFormat
+        athlete.age = getAge(athlete.date_of_birth)
+        athlete.date_of_birth = formatDate(athlete.date_of_birth)
 
         setAthlete(athlete)
 
@@ -65,16 +63,18 @@ export default function AthleteInfo() {
                                 <CCol className='mr-auto'>
                                     <CRow className='py-1'>ID</CRow>
                                     <CRow className='py-1'>AGE</CRow>
+                                    <CRow className='py-1'>GENDER</CRow>
                                     <CRow className='py-1'>HEIGHT</CRow>
                                     <CRow className='py-1'>WEIGHT</CRow>
                                     <CRow className='py-1'>AFFILIATE</CRow>
                                 </CCol>
                                 <CCol>
                                     <CRow className='py-1'>{athlete.id ? athlete.id : '--'}</CRow>
-                                    <CRow className='py-1'>{athlete.id ? athlete.id : '--'}</CRow>
+                                    <CRow className='py-1'>{athlete.age ? athlete.age : '--'}</CRow>
+                                    <CRow className='py-1'>{athlete.gender ? athlete.gender : '--'}</CRow>
                                     <CRow className='py-1'>{athlete.height ? athlete.height+' cm' : '--'}</CRow>
                                     <CRow className='py-1'>{athlete.weight ? athlete.weight+' kg' : '--'}</CRow>
-                                    <CRow className='py-1'>{athlete.id ? athlete.id : '--'}</CRow>
+                                    <CRow className='py-1'>{athlete.affiliate ? athlete.affiliate : '--'}</CRow>
                                 </CCol>
                             </CRow>
                         </Card.Body>
