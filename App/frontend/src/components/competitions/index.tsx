@@ -47,7 +47,7 @@ export default function () {
     const onCompetitionClick = (id: string) => {
 
         console.log(`[click]: Competition ${id} clicked`)
-        // history.push(`/competitions/${id}`)
+        history.push(`/competitions/${id}`)
 
     }
 

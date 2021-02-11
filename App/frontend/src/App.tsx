@@ -5,6 +5,7 @@ import AthleteList from 'components/athletes'
 import CompetitionList from 'components/competitions'
 import Navbarr from 'components/navbar'
 import AthleteInfo from 'components/athlete-info'
+import CompetitionInfo from 'components/competition-info'
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -25,6 +26,7 @@ export default function App() {
           <Route path='/competitions' exact component={CompetitionList} />
 
           <Route path='/athletes/:id' exact component={AthleteInfo} />
+          <Route path='/competitions/:id' exact component={CompetitionInfo} />
 
       </Switch>
 

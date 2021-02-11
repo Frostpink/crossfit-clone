@@ -83,9 +83,29 @@ const getCompetitionById = (req, res) => {
 
 }
 
+// Get all participants in certain competition
+const getParticipants = (req, res) => {
+
+    const id = req.params.id // competition id
+    
+    const query = `select a.name, a.id from competitions c
+                   inner join registrations r on c.id = r.competition_id
+                   inner join athletes a on a.id = r.athlete_id
+                   where c.id = '2';`
+
+    pool.query(query, (err, results) => {
+        if (err) {
+            throw err
+        }
+        res.status(200).json(results.rows)
+    })
+
+}
+
 module.exports = {
     getAthletes,
     getAthleteById,
     getCompetitions,
     getCompetitionById,
+    getParticipants,
 }
