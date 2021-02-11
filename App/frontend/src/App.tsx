@@ -1,25 +1,29 @@
 import React from 'react'
-import { Container } from 'components/styled/Container'
 import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
+
 import AthleteList from 'components/athletes'
-import Navbar from 'components/navbar'
-import './App.css'
+import Navbarr from 'components/navbar'
+import AthleteInfo from 'components/athlete-info'
+
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+import './App.scss'
 
 export default function App() {
   return (
 
     <Router>
       
-      <Navbar />
+      <Navbarr />
 
       <Switch>
-        <Container>
 
           <Route path='/' exact>Home</Route>
 
           <Route path='/athletes' exact component={AthleteList} />
 
-        </Container>
+          <Route path='/athletes/:id' exact component={AthleteInfo} />
+
       </Switch>
 
     </Router>
