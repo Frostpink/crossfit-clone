@@ -10,7 +10,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Table from 'react-bootstrap/Table'
-import Card from 'react-bootstrap/Card'
+import BCard from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
 import ListGroup from 'react-bootstrap/ListGroup'
 
@@ -22,6 +22,11 @@ const CRow = styled.div`
 const CCol = styled.div`
     display: flex;
     flex-direction: column;
+`
+
+const Card = styled(BCard)`
+    box-shadow: 0 0 30px rgba(189, 189, 189, 0.171);
+    margin: 20px;
 `
 
 export default function AthleteInfo() {
@@ -41,12 +46,12 @@ export default function AthleteInfo() {
 
         athlete.date_of_birth = dateFormat
 
-        setAthlete(result.data)
+        setAthlete(athlete)
 
     }
 
     useEffect(() => {
-        // fetchData()
+        fetchData()
     }, [])
 
     const { id } = useParams<{ id: string }>()
@@ -59,21 +64,21 @@ export default function AthleteInfo() {
                 <Col xl={3} lg={4} md={5}>
                     <Card>
                         <Card.Body>
-                            <Card.Title>{athlete.name ? athlete.name : '--'}</Card.Title>
+                            <Card.Title className='pb-2'>{athlete.name ? athlete.name : '--'}</Card.Title>
                             <CRow>
                                 <CCol className='mr-auto'>
-                                    <CRow>ID</CRow>
-                                    <CRow>AGE</CRow>
-                                    <CRow>HEIGHT</CRow>
-                                    <CRow>WEIGHT</CRow>
-                                    <CRow>AFFILIATE</CRow>
+                                    <CRow className='py-1'>ID</CRow>
+                                    <CRow className='py-1'>AGE</CRow>
+                                    <CRow className='py-1'>HEIGHT</CRow>
+                                    <CRow className='py-1'>WEIGHT</CRow>
+                                    <CRow className='py-1'>AFFILIATE</CRow>
                                 </CCol>
                                 <CCol>
-                                    <CRow>{athlete.id ? athlete.id : '--'}</CRow>
-                                    <CRow>{athlete.id ? athlete.id : '--'}</CRow>
-                                    <CRow>{athlete.height ? athlete.height : '--'}</CRow>
-                                    <CRow>{athlete.weight ? athlete.weight : '--'}</CRow>
-                                    <CRow>{athlete.id ? athlete.id : '--'}</CRow>
+                                    <CRow className='py-1'>{athlete.id ? athlete.id : '--'}</CRow>
+                                    <CRow className='py-1'>{athlete.id ? athlete.id : '--'}</CRow>
+                                    <CRow className='py-1'>{athlete.height ? athlete.height+' cm' : '--'}</CRow>
+                                    <CRow className='py-1'>{athlete.weight ? athlete.weight+' kg' : '--'}</CRow>
+                                    <CRow className='py-1'>{athlete.id ? athlete.id : '--'}</CRow>
                                 </CCol>
                             </CRow>
                         </Card.Body>

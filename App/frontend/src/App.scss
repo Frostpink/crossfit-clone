@@ -11,11 +11,4 @@ $spacers: ( 0:0 ) !default;
   ));
 }
 
-.container .col .col, .container .card {
-
-  box-shadow: 0 0 30px rgba(189, 189, 189, 0.171);
-  margin: 20px;
-
-}
-
 @import 'node_modules/bootstrap/scss/bootstrap'

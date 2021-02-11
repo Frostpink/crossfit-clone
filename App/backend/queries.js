@@ -31,6 +31,22 @@ const getAthletes = (req, res) => {
 
 }
 
+// Get single athlete by id
+const getAthleteById = (req, res) => {
+
+    const id = req.params.id
+
+    const query = `SELECT * FROM athletes WHERE id = '${id}'`
+    pool.query(query, (err, results) => {
+        if (err) {
+            throw err
+        }
+        res.status(200).json(results.rows)
+    })
+
+}
+
 module.exports = {
     getAthletes,
+    getAthleteById,
 }
