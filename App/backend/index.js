@@ -22,6 +22,9 @@ app.get('/', (req, res) => {
 app.get('/athletes', db.getAthletes)
 app.get('/athletes/:id', db.getAthleteById)
 
+app.get('/competitions', db.getCompetitions)
+app.get('/competitions/:id', db.getCompetitionById)
+
 app.listen(PORT, () => {
     console.log(`[server]: Listening on http://localhost:${PORT}/`)
 })

@@ -6,13 +6,9 @@ import styled from 'styled-components'
 import IAthlete from 'models/Athlete'
 
 import BContainer from 'react-bootstrap/Container'
-import Jumbotron from 'react-bootstrap/Jumbotron'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Table from 'react-bootstrap/Table'
 import BCard from 'react-bootstrap/Card'
-import CardGroup from 'react-bootstrap/CardGroup'
-import ListGroup from 'react-bootstrap/ListGroup'
 
 const CRow = styled.div`
     display: flex;
