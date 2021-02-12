@@ -27,7 +27,7 @@ const Card = styled(BCard)`
     margin: 20px;
 `
 
-export default function AthleteInfo() {
+export default function({ ...props }) {
 
     const [athlete, setAthlete] = useState<IAthlete>({} as IAthlete)
 
@@ -47,6 +47,9 @@ export default function AthleteInfo() {
     useEffect(() => {
         fetchData()
     }, [])
+    useEffect(() => {
+        fetchData()
+    }, [props.match.params.id])
 
     const { id } = useParams<{ id: string }>()
 

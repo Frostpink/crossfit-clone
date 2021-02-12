@@ -27,6 +27,8 @@ app.get('/competitions/:id', db.getCompetitionById)
 
 app.get('/participants/:id', db.getParticipants)
 
+app.get('/search/:str', db.getSearchResult)
+
 app.listen(PORT, () => {
     console.log(`[server]: Listening on http://localhost:${PORT}/`)
 })

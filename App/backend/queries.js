@@ -20,8 +20,12 @@ const getAthletes = (req, res) => {
     if (req.query.get) {
         get = req.query.get
     }
+    let order = 'asc'
+    if (req.query.order) {
+        order = req.query.order
+    }
 
-    const query = `SELECT ${get} FROM athletes ORDER BY ${sort} ASC`
+    const query = `SELECT ${get} FROM athletes ORDER BY ${sort} ${order}`
     pool.query(query, (error, results) => {
         if (error) {
             throw error
@@ -48,6 +52,8 @@ const getAthleteById = (req, res) => {
 
 // Get all competitions
 const getCompetitions = (req, res) => {
+
+    console.log('[competitions]')
 
     let sort = 'id'
     let get = '*'
@@ -93,6 +99,26 @@ const getParticipants = (req, res) => {
                    inner join athletes a on a.id = r.athlete_id
                    where c.id = '2';`
 
+    console.log('[GET]: participants in event id '+id);
+
+    pool.query(query, (err, results) => {
+        if (err) {
+            throw err
+        }
+        res.status(200).json(results.rows)
+    })
+
+}
+
+// Get search result (by name)
+const getSearchResult = (req, res) => {
+
+    const str = req.params.str // string to search in names
+    
+    const query = `select id, name from athletes where name ~* '\\s${str}|^${str}';`
+
+    console.log('[GET]: search for '+str)
+
     pool.query(query, (err, results) => {
         if (err) {
             throw err
@@ -108,4 +134,5 @@ module.exports = {
     getCompetitions,
     getCompetitionById,
     getParticipants,
+    getSearchResult,
 }

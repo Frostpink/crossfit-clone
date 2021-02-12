@@ -14,7 +14,7 @@ export const formatDate = (dateString: string): string => {
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     const date = new Date(dateString)
-    const dateFormat = `${monthNames[date.getMonth()]} ${date.getDay()}, ${date.getFullYear()}`
+    const dateFormat = `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
 
     return dateFormat
 

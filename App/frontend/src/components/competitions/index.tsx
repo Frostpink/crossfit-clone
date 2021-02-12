@@ -27,7 +27,6 @@ export default function () {
             comp.end_date_time = formatDate(comp.end_date_time)
         })
 
-
         setCompetitions(result.data)
 
     }

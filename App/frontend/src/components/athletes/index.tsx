@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 
@@ -10,15 +10,23 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 import { getAge } from 'Helper'
+import styled from 'styled-components'
+
+const CRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+`
 
 export default function AthleteList() {
 
     const [athletes, setAthletes] = useState<IAthlete[]>([])
     const [sort, setSort] = useState<string>('id')
+    const [order, setOrder] = useState<'asc' | 'desc'>('asc')
 
     const fetchData = async (sort='id') => {
 
-        const result = await axios.get<IAthlete[]>(`http://localhost:8080/athletes?sort=${sort}&get=id,name,gender,height,weight,date_of_birth`).then((response => {
+        const result = await axios.get<IAthlete[]>(`http://localhost:8080/athletes?sort=${sort}&get=id,name,gender,height,weight,date_of_birth&order=${order}`).then((response => {
 
             response.data.map((athlete: IAthlete) => {
 
@@ -36,7 +44,7 @@ export default function AthleteList() {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [order])
 
     const history = useHistory()
     const onAthleteClick = (id: string) => {
@@ -55,11 +63,16 @@ export default function AthleteList() {
 
         <Container>
             
-            <DropdownButton variant='outline-info' id="dropdown-button" title={<span className='pr-3'>Sort by {sort}</span>} className='my-5'>
-                <Dropdown.Item as={Button} onClick={() => newSort('id')    }>ID    </Dropdown.Item>
-                <Dropdown.Item as={Button} onClick={() => newSort('name')  }>Name  </Dropdown.Item>
-                <Dropdown.Item as={Button} onClick={() => newSort('height')}>Height</Dropdown.Item>
-            </DropdownButton>
+            <CRow className='pl-sm-10'>
+                <DropdownButton variant='outline-info' id="dropdown-button" title={<span className='pr-3'>Sort by {sort}</span>} className='my-5 mr-8'>
+                    <Dropdown.Item as={Button} onClick={() => newSort('id')    }>ID    </Dropdown.Item>
+                    <Dropdown.Item as={Button} onClick={() => newSort('name')  }>Name  </Dropdown.Item>
+                    <Dropdown.Item as={Button} onClick={() => newSort('height')}>Height</Dropdown.Item>
+                    <Dropdown.Item as={Button} onClick={() => newSort('gender')}>Gender</Dropdown.Item>
+                    <Dropdown.Item as={Button} onClick={() => newSort('date_of_birth')}>Age</Dropdown.Item>
+                </DropdownButton>
+                <Button className='my-auto' variant='outline-info' onClick={() => {order=='asc'?setOrder('desc'):setOrder('asc')}}>{order}</Button>
+            </CRow>
 
             <Table striped bordered hover responsive>
                 <thead>
@@ -69,7 +82,6 @@ export default function AthleteList() {
                         <th>Gender</th>
                         <th>Height (cm)</th>
                         <th>Weight (kg)</th>
-                        <th>Date Of Birth</th>
                         <th>Age</th>
                     </tr>
                 </thead>
@@ -81,7 +93,6 @@ export default function AthleteList() {
                             <td>{athlete.gender}</td>
                             <td>{athlete.height}</td>
                             <td>{athlete.weight}</td>
-                            <td>{athlete.date_of_birth}</td>
                             <td>{athlete.age}</td>
                         </tr>
                     ))}
