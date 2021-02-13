@@ -3,8 +3,9 @@ export default interface IAthlete {
     name: string
     date_of_birth: string
     gender: string
-    height: number
-    weight: number
+    height?: number
+    weight?: number
     affiliate: string
+    
     age?: number
 }

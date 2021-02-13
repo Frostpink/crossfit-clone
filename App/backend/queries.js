@@ -128,6 +128,27 @@ const getSearchResult = (req, res) => {
 
 }
 
+// Post a new athlete
+const postAthlete = (req, res) => {
+
+    console.log(req.body)
+
+    const name = req.body.name
+    const id = shortid.generate()
+
+    console.log(`[server] adding athlete (${name}) with id ${id}`)
+
+    pool.query(`INSERT INTO athletes (id, name) VALUES ($1, $2);`, [id, name])
+        .then(res => console.log(res.rows[0]))
+        .catch(err => {
+            console.error(err.stack)
+            res.status(400).send('ERROR WHILE INSERT')
+        })
+
+    res.status(201).send('OK')
+
+}
+
 module.exports = {
     getAthletes,
     getAthleteById,
@@ -135,4 +156,5 @@ module.exports = {
     getCompetitionById,
     getParticipants,
     getSearchResult,
+    postAthlete,
 }

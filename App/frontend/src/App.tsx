@@ -10,6 +10,7 @@ import CompetitionInfo from 'components/competition-info'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.scss'
+import CreateAthlete from 'components/CreateAthlete'
 
 export default function App() {
   return (
@@ -27,6 +28,8 @@ export default function App() {
 
           <Route path='/athletes/:id' exact component={AthleteInfo} />
           <Route path='/competitions/:id' exact component={CompetitionInfo} />
+
+          <Route path='/athlete/new' exact component={CreateAthlete} />
 
       </Switch>
 

@@ -59,11 +59,10 @@ export default function() {
                     <Nav.Link as={Link} to='/'>Home</Nav.Link>
                     <Nav.Link as={Link} to='/athletes'>Athletes</Nav.Link>
                     <Nav.Link as={Link} to='/competitions'>Competitions</Nav.Link>
+                    <Nav.Link as={Link} to='/athlete/new'>Register</Nav.Link>
                 </Nav>
 
-
                 <div>
-
                     <SearchBox placeholder='Search Anything' type='text' value={value} onChange={e => setValue(e.target.value)} onBlur={() => {setShowSearch(false)}} onFocus={() => {setShowSearch(true)}} />
                     {/* <Dropdown show={showSearch}>
                         <DropdownMenu onSelect={() => {console.log('[hello]')}}>
@@ -78,7 +77,6 @@ export default function() {
                         ))}
                     </MenuBox>
                 </div>
-
 
             </Navbar.Collapse>
         </Navbar>
