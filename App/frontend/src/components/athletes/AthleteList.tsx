@@ -24,12 +24,13 @@ export default function AthleteList() {
     const [sort, setSort] = useState<string>('id')
     const [order, setOrder] = useState<'asc' | 'desc'>('asc')
 
-    const fetchData = async (sort='id') => {
+    const fetchData = async () => {
 
         const result = await axios.get<IAthlete[]>(`http://localhost:8080/athletes?sort=${sort}&get=id,name,gender,height,weight,date_of_birth&order=${order}`).then((response => {
 
             response.data.map((athlete: IAthlete) => {
 
+                if (athlete.date_of_birth)
                 athlete.age = getAge(athlete.date_of_birth)
 
             })
@@ -44,7 +45,7 @@ export default function AthleteList() {
 
     useEffect(() => {
         fetchData()
-    }, [order])
+    }, [order, sort])
 
     const history = useHistory()
     const onAthleteClick = (id: string) => {
@@ -54,22 +55,17 @@ export default function AthleteList() {
 
     }
 
-    const newSort = (sort: string) => {
-        setSort(sort)
-        fetchData(sort)
-    }
-
     return (
 
         <Container>
             
             <CRow className='pl-sm-10'>
                 <DropdownButton variant='outline-info' id="dropdown-button" title={<span className='pr-3'>Sort by {sort}</span>} className='my-5 mr-8'>
-                    <Dropdown.Item as={Button} onClick={() => newSort('id')    }>ID    </Dropdown.Item>
-                    <Dropdown.Item as={Button} onClick={() => newSort('name')  }>Name  </Dropdown.Item>
-                    <Dropdown.Item as={Button} onClick={() => newSort('height')}>Height</Dropdown.Item>
-                    <Dropdown.Item as={Button} onClick={() => newSort('gender')}>Gender</Dropdown.Item>
-                    <Dropdown.Item as={Button} onClick={() => newSort('date_of_birth')}>Age</Dropdown.Item>
+                    <Dropdown.Item as={Button} onClick={() => setSort('id')    }>ID    </Dropdown.Item>
+                    <Dropdown.Item as={Button} onClick={() => setSort('name')  }>Name  </Dropdown.Item>
+                    <Dropdown.Item as={Button} onClick={() => setSort('height')}>Height</Dropdown.Item>
+                    <Dropdown.Item as={Button} onClick={() => setSort('gender')}>Gender</Dropdown.Item>
+                    <Dropdown.Item as={Button} onClick={() => setSort('date_of_birth')}>Age</Dropdown.Item>
                 </DropdownButton>
                 <Button className='my-auto' variant='outline-info' onClick={() => {order=='asc'?setOrder('desc'):setOrder('asc')}}>{order}</Button>
             </CRow>

@@ -133,12 +133,23 @@ const postAthlete = (req, res) => {
 
     console.log(req.body)
 
-    const name = req.body.name
     const id = shortid.generate()
 
-    console.log(`[server] adding athlete (${name}) with id ${id}`)
+    const name = req.body.name
+    const gender = req.body.gender
 
-    pool.query(`INSERT INTO athletes (id, name) VALUES ($1, $2);`, [id, name])
+    let values = ''
+    let data = ''
+    if (name)   {values+='name,';   data+=`'${name}',`}
+    if (gender) {values+='gender,'; data+=`'${gender}',`}
+
+    console.log(`[server] adding athlete (${name}) with id ${id}`)
+    console.log(`[server] values: (${values}) data: (${data})`)
+
+    const query = `INSERT INTO athletes (${values}id) VALUES (${data}'${id}');`
+    console.log(query)
+
+    pool.query(query)
         .then(res => console.log(res.rows[0]))
         .catch(err => {
             console.error(err.stack)

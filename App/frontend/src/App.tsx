@@ -1,20 +1,16 @@
 import React from 'react'
 import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 
-import AthleteList from 'components/athletes'
-import CompetitionList from 'components/competitions'
 import Navbarr from 'components/navbar'
-import AthleteInfo from 'components/athlete-info'
-import CompetitionInfo from 'components/competition-info'
-
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import Competition from 'components/competitions'
+import Athlete from 'components/athletes'
 
 import './App.scss'
-import CreateAthlete from 'components/CreateAthlete'
 
 export default function App() {
   return (
 
+    <div className='h-screen flex flex-col'>
     <Router>
       
       <Navbarr />
@@ -23,17 +19,18 @@ export default function App() {
 
           <Route path='/' exact>Home</Route>
 
-          <Route path='/athletes' exact component={AthleteList} />
-          <Route path='/competitions' exact component={CompetitionList} />
+          <Route path='/athletes' exact component={Athlete.List} />
+          <Route path='/competitions' exact component={Competition.List} />
 
-          <Route path='/athletes/:id' exact component={AthleteInfo} />
-          <Route path='/competitions/:id' exact component={CompetitionInfo} />
+          <Route path='/athletes/:id' exact component={Athlete.Info} />
+          <Route path='/competitions/:id' exact component={Competition.Info} />
 
-          <Route path='/athlete/new' exact component={CreateAthlete} />
+          <Route path='/athlete/new' exact component={Athlete.Create} />
 
       </Switch>
 
     </Router>
+    </div>
     
   )
 }

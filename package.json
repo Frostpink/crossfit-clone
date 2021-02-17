@@ -1,0 +1,24 @@
+{
+  "name": "projet-teamchloe",
+  "version": "1.0.0",
+  "description": "Name | Student Number | Email\r -----|----------------|------\r Chloé Dumas | 300072427 | dduma032@uottawa.ca",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"cd .\\App\\frontend && npm start\" \"cd .\\App\\backend && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/professor-forward/projet-teamchloe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/professor-forward/projet-teamchloe/issues"
+  },
+  "homepage": "https://github.com/professor-forward/projet-teamchloe#readme",
+  "devDependencies": {
+    "concurrently": "^5.3.0"
+  }
+}
