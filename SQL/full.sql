@@ -1,5 +1,21 @@
+CREATE SEQUENCE IF NOT EXISTS competition_id;
+CREATE SEQUENCE IF NOT EXISTS athlete_id;
+
+CREATE TABLE IF NOT EXISTS athletes (
+    id integer PRIMARY KEY SET DEFAULT nextval('athlete_id'),
+    name VARCHAR(200),
+    date_of_birth DATE,
+    gender VARCHAR(30),
+    height NUMERIC(4, 1),
+    weight NUMERIC(4, 1),
+    identifier VARCHAR(20) UNIQUE NOT NULL,
+    created DATE,
+    modified DATE,
+    nationality VARCHAR(100)
+);
+
 CREATE TABLE IF NOT EXISTS competitions (
-    id VARCHAR(20) PRIMARY KEY,
+    id integer PRIMARY KEY SET DEFAULT nextval('competition_id'),
     name VARCHAR(200),
     venue VARCHAR(200),
     identifier VARCHAR(20) UNIQUE NOT NULL,
