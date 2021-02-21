@@ -11,6 +11,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 import { getAge } from 'Helper'
 import styled from 'styled-components'
+import Search from 'components/search'
 
 const CRow = styled.div`
     display: flex;
@@ -23,6 +24,9 @@ export default function AthleteList() {
     const [athletes, setAthletes] = useState<IAthlete[]>([])
     const [sort, setSort] = useState<string>('id')
     const [order, setOrder] = useState<'asc' | 'desc'>('asc')
+
+    const [searchValue, setSearchValue] = useState('')
+    const [searchList, setSearchList] = useState<IAthlete[]>([] as IAthlete[])
 
     const fetchData = async () => {
 
@@ -47,7 +51,21 @@ export default function AthleteList() {
         fetchData()
     }, [order, sort])
 
+    const fetchSearchData = async () => {
+
+        const result = await axios.get<IAthlete[]>(`http://localhost:8080/search/${searchValue}?what=athletes`).then(response => {console.log(response);return response.data})
+        
+        setSearchList(result)
+
+    }
+
     const history = useHistory()
+    useEffect(() => {
+
+        if (searchValue != '') fetchSearchData()
+        
+    }, [searchValue])
+
     const onAthleteClick = (id: string) => {
 
         console.log(`[click]: Athlete ${id} clicked`)
@@ -60,6 +78,7 @@ export default function AthleteList() {
         <Container>
             
             <CRow className='pl-sm-10'>
+
                 <DropdownButton variant='outline-info' id="dropdown-button" title={<span className='pr-3'>Sort by {sort}</span>} className='my-5 mr-8'>
                     <Dropdown.Item as={Button} onClick={() => setSort('id')    }>ID    </Dropdown.Item>
                     <Dropdown.Item as={Button} onClick={() => setSort('name')  }>Name  </Dropdown.Item>
@@ -67,7 +86,18 @@ export default function AthleteList() {
                     <Dropdown.Item as={Button} onClick={() => setSort('gender')}>Gender</Dropdown.Item>
                     <Dropdown.Item as={Button} onClick={() => setSort('date_of_birth')}>Age</Dropdown.Item>
                 </DropdownButton>
+                
                 <Button className='my-auto' variant='outline-info' onClick={() => {order=='asc'?setOrder('desc'):setOrder('asc')}}>{order}</Button>
+
+                <Search.FullSearch
+                    className='my-auto ml-auto mr-6'
+                    placeholder='Search Athletes'
+                    value={searchValue}
+                    list={searchList}
+                    onClick={onAthleteClick}
+                    setValue={setSearchValue}
+                    />
+
             </CRow>
 
             <Table striped bordered hover responsive>

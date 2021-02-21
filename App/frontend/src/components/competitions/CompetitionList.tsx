@@ -10,15 +10,14 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 import { formatDate } from 'Helper'
+import Search from 'components/search'
 
 export default function () {
-
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     const [competitions, setCompetitions] = useState<ICompetition[]>([])
     const [sort, setSort] = useState<string>('id')
 
-    const fetchData = async (sort='id') => {
+    const fetchData = async () => {
 
         const result = await axios.get<ICompetition[]>(`http://localhost:8080/competitions?sort=${sort}&get=id,name,venue,start_date_time,end_date_time`)
 
@@ -33,7 +32,7 @@ export default function () {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [sort])
 
     const history = useHistory()
     const onCompetitionClick = (id: string) => {
@@ -43,19 +42,40 @@ export default function () {
 
     }
 
-    const newSort = (sort: string) => {
-        setSort(sort)
-        fetchData(sort)
+
+    // Search thing
+    const [searchValue, setSearchValue] = useState<string>('')
+    const [searchList, setSearchList] = useState<ICompetition[]>([] as ICompetition[])
+
+    useEffect(() => {
+        if (searchValue != '') fetchSearchData()
+    }, [searchValue])
+
+    const fetchSearchData = async () => {
+        const result = await axios.get<ICompetition[]>(`http://localhost:8080/search/${searchValue}?what=competitions`).then(response => (response.data))
+        setSearchList(result)
     }
+
 
     return (
 
         <Container>
             
-            <DropdownButton variant='outline-info' id="dropdown-button" title={<span className='pr-3'>Sort by {sort}</span>} className='my-5'>
-                <Dropdown.Item as={Button} onClick={() => newSort('id')    }>ID    </Dropdown.Item>
-                <Dropdown.Item as={Button} onClick={() => newSort('name')  }>Name  </Dropdown.Item>
-            </DropdownButton>
+            <div className='flex flex-row'>
+                <DropdownButton variant='outline-info' id="dropdown-button" title={<span className='pr-3'>Sort by {sort}</span>} className='my-5'>
+                    <Dropdown.Item as={Button} onClick={() => setSort('id')    }>ID    </Dropdown.Item>
+                    <Dropdown.Item as={Button} onClick={() => setSort('name')  }>Name  </Dropdown.Item>
+                </DropdownButton>
+
+                <Search.FullSearch
+                    className='my-auto ml-auto mr-6'
+                    list={searchList}
+                    placeholder='Search Competitions'
+                    onClick={onCompetitionClick}
+                    setValue={setSearchValue}
+                    value={searchValue}
+                />
+            </div>
 
             <Table striped bordered hover responsive>
                 <thead>

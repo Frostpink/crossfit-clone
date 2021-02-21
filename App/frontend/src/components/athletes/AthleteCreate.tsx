@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import IAthlete from 'models/Athlete'
 
-import SearchBox from 'components/navbar/SearchBox'
+import SearchBox from 'components/search/SearchBox'
 
 interface InputProps {
     label: string

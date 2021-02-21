@@ -10,7 +10,7 @@ const fadeIn = keyframes`
     transform: scale(1);
     opacity: 1;
   }
-`;
+`
 
 const fadeOut = keyframes`
   from {
@@ -22,7 +22,7 @@ const fadeOut = keyframes`
     transform: scale(.25);
     opacity: 0;
   }
-`;
+`
 
 type Props = {show:boolean}
 
@@ -41,7 +41,7 @@ export default styled.div`
     min-width: 10rem;
     overflow: hidden;
 
-    visibility: ${(props: Props) => !props.show ? 'hidden' : 'visible'};
+    /* visibility: ${(props: Props) => !props.show ? 'hidden' : 'visible'};
     animation: ${(props: Props) => !props.show ? fadeOut : fadeIn} 200ms linear;
-    transition: visibility 200ms linear;
+    transition: visibility 200ms linear; */
 `

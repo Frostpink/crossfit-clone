@@ -111,11 +111,14 @@ const getParticipants = (req, res) => {
 }
 
 // Get search result (by name)
-const getSearchResult = (req, res) => {
+const getSearch = (req, res) => {
 
     const str = req.params.str // string to search in names
+
+    const what = req.query.what
+    console.log(what)
     
-    const query = `select id, name from athletes where name ~* '\\s${str}|^${str}';`
+    const query = `select id, name from ${what} where name ~* '\\s${str}|^${str}';`
 
     console.log('[GET]: search for '+str)
 
@@ -166,6 +169,6 @@ module.exports = {
     getCompetitions,
     getCompetitionById,
     getParticipants,
-    getSearchResult,
+    getSearch,
     postAthlete,
 }

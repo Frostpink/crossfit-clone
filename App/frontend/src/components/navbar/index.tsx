@@ -1,22 +1,11 @@
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 import { Link, useHistory } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import IAthlete from 'models/Athlete'
 import axios from 'axios'
-import ICompetition from 'models/Competition'
 
-import SearchBox from './SearchBox'
-import MenuBox from './MenuBox'
-import MenuLink from './MenuLink'
-
-import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownToggle from 'react-bootstrap/DropdownToggle'
-import DropdownMenu from 'react-bootstrap/DropdownMenu'
-import DropdownItem from 'react-bootstrap/DropdownItem'
-import FormControl from 'react-bootstrap/FormControl'
+import Search from 'components/search'
 
 export default function() {
 
@@ -63,7 +52,6 @@ export default function() {
                 </Nav>
 
                 <div>
-                    <SearchBox placeholder='Search Anything' type='text' value={value} onChange={e => setValue(e.target.value)} onBlur={() => {setShowSearch(false)}} onFocus={() => {setShowSearch(true)}} />
                     {/* <Dropdown show={showSearch}>
                         <DropdownMenu onSelect={() => {console.log('[hello]')}}>
                             {athletes.map(a => (
@@ -71,11 +59,6 @@ export default function() {
                             ))}
                         </DropdownMenu>
                     </Dropdown> */}
-                    <MenuBox show={showSearch}>
-                        {athletes.map(a => (
-                            <MenuLink key={a.id} to={'/athletes/'+a.id} onClick={() => {onClick(a.id)}}>{a.name}</MenuLink>
-                        ))}
-                    </MenuBox>
                 </div>
 
             </Navbar.Collapse>
