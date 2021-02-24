@@ -4,7 +4,9 @@ CREATE TABLE IF NOT EXISTS competitions (
     venue VARCHAR(200),
     identifier VARCHAR(20) UNIQUE NOT NULL,
     start_date_time DATE,
-    end_date_time DATE
+    end_date_time DATE,
+    created DATE,
+    modified DATE
 );
 
 CREATE TABLE IF NOT EXISTS registrations (
