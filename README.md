@@ -8,6 +8,16 @@ Chloé Dumas | 300072427 | dduma032@uottawa.ca
 
 ## Deliverable 2
 
+Mark | Description | Comment
+---|---|---
+3.0 | ER Model | See below
+3.0 | Relational Model / Schema SQL | See below
+1.0 | Application | See at the end of this file
+1.0 | SQL 'seed' / insert, update, select, delete | See this file or folder SQL
+1.0 | README.md has all info | Yes
+1.0 | Using git | Yes
+/10 | |
+
 J'ai utilisé LucidChart pour faire les diagrammes.
 
 J'ai utilisé Postgres pour la base de données et expressjs avec react pour l'application (voir à la fin pour l'installation).
