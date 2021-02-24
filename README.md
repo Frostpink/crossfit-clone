@@ -185,3 +185,112 @@ Kippy Toman|null|null|null
 On peut remarquer que l'athlète Milissent Prazer n'est plus enregistré à la compétition 'Competition mai'.
 
 
+## Installer le site web sur un système mac 
+
+1. Installer postgres 
+Aller sur le site https://www.postgresql.org/download/ et installer postgres 13
+**Il faut se souvenir du password et du port**
+
+2. Installer Node.js (et npm) car le site est fait avec react et express
+Aller sur le site https://nodejs.org/en/ et installer Node.js
+
+3. Base de données
+
+- Ovrir une shell psql
+
+- Si psql dans le terminal retourne l'erreur 'command not found', le PATH n'a peut être pas bien été installé. Donc il faut ajouter 'export PATH="/Library/PostgreSQL/11/bin:$PATH"' dans le ~/.zshrc ou ~/.bashrc dépendant si le terminal utilise zsh ou bash
+
+- Utiliser le terminal se connecter à postgres avec la ligne
+```zsh
+psql -h HOST -p PORT -U postgres -W
+```
+remplacer HOST par 'localhost'
+remplacer PORT par le port établie lors de l'installation (par défault 5432)
+
+- Une fois connecté, il faut créer la base de données (crossfit)
+```zsh
+create database crossfit
+```
+
+- faire exit afin de sortir de psql et cd au dossier du projet
+```zsh
+exit [return]
+cd **path to projct**
+```
+remplacer HOST par 'localhost'
+remplacer PORT par le port établie lors de l'installation (par défault 5432)
+
+- maintenant executer les fichiers dans cet ordre
+```psql
+psql -h localhost -p 5432 -U postgres -W -d crossfit -f ./SQL/schema.sql
+psql -h localhost -p 5432 -U postgres -W -d crossfit -f ./SQL/seed_athletes.sql
+psql -h localhost -p 5432 -U postgres -W -d crossfit -f ./SQL/seed_competitions.sql
+psql -h localhost -p 5432 -U postgres -W -d crossfit -f ./SQL/seed_registrations.sql
+```
+
+- base de donnes termine
+
+4. Installer le site
+
+- Traverser au projet avec 'cd'
+
+- Installer les packages
+Du root './'
+```zsh
+npm i
+```
+Du frontend './App/frontend'
+```zsh
+cd App/frontend
+npm i
+```
+et du backend './App/backend'
+```zsh
+cd ../backend
+npm i
+```
+ensuite important de retourner au root avec
+```zsh
+cd ../..
+```
+
+5. Modifier les info pour la connection 
+- Aller à './App/backend/queries.js' et modifier port à la valeur établie lors de l'installation de postgres
+- Aller à './App/backend/queries.js' et modifier password au password établie lors de l'installation de postgres
+- S'assurer que les ports 8080 (backend) et 3000 (frontend) sont librent (sinon modifier à 'App/backend/index.js' et à 'App/frontend/.env')
+
+6. Exécuter le site web
+- cd au root du projet
+- exécuter 'npm start'
+- attendre un moment jusqu'à temps que le terminal affiche 'You can now view frontend in the browser. http://localhost:3000'
+- visiter le site web a 'http://localhost:3000'
+
+
+## Démonstration du site web fonctionnel
+
+Vue athlètes par id
+![athletes](Screenshots/view-athletes-id-asc.png)
+
+Vue compétitions
+![athletes](Screenshots/view-competitions.png)
+
+Vue créer un athlète
+![athletes](Screenshots/view-create-athlete.png)
+
+Vue athlètes après l'ajout d'un athète
+![athletes](Screenshots/view-post-create-athlete.png)
+
+Il y possibilité de changer l'ordre d'affichage des tableaux des athlètes et compétitions (name asc)
+![athletes](Screenshots/view-athlete-name-asc.png)
+
+On peut aussi rechercher un athlète par nom
+![athletes](Screenshots/view-search.png)
+
+Si on clique sur le nom d'un athlète, on va à son informations
+![athletes](Screenshots/view-athlete-info.png)
+
+Si on clique sur le nom d'une compétition, on va à la description de la compétition (et la liste des athlètes inscrit)
+![athletes](Screenshots/view-comp-info.png)
+
+
+
