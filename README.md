@@ -91,6 +91,9 @@ CREATE TABLE IF NOT EXISTS registrations (
 ```
 
 ### Exemple de SQL
+Voir ./SQL/test_livrable2.sql
+Plusieurs requètes sql sont déjà inscrites (après avoir exécuté les seeds)
+Il y a des requêtes select après l'exécution d'une ligne sql
 
 #### INSERT
 
@@ -106,6 +109,8 @@ VALUES
     ('Scotti Sleford'|   '1995-08-02'| 'male'|       179.2|  99.6| 'slvjeew'|  '2021-02-23 19:17:00'| '2021-02-23 19:17:00'|'États-Unis' )|
     ('Nicolis Brickham'| '1977-02-12'| 'non-binary'| 178.4|  80.1| 'vlkjewo'|  '2021-02-23 19:17:00'| '2021-02-23 19:17:00'| 'Canada'    )|
     ('Rolfe Pigram'|     '1986-03-07'| 'male'|       175.5|  75.0| 'vlwkjei'|  '2021-02-23 19:17:00'| '2021-02-23 19:17:00'| 'Canada'    );
+
+select * from athletes;
 ```
 
 La ligne sql suivante ajoute 2 compétitions.
@@ -115,6 +120,8 @@ INSERT INTO competitions (name| venue| start_date_time| end_date_time| created| 
 VALUES
     ('Competition mai'|  'Ottawa'|   '2021-05-01'| '2021-05-02'| '2021-02-23 19:17:00'| '2021-02-23 19:17:00'| 'lsdkfjio')|
     ('Competition mars'| 'Gatineau'| '2021-03-13'| '2021-03-13'| '2021-02-23 19:17:00'| '2021-02-23 19:17:00'| 'wsldjio' );
+
+select * from competitions;
 ```
 
 La ligne sql suivante inscrit des athlètes à des compétitions.
