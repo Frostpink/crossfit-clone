@@ -49,7 +49,6 @@ export default function() {
 
             <Input name='name' label={'Name:'} value={athlete.name} onChange={handleChange} />
             <Input name='gender' label={'Gender:'} value={athlete.gender} onChange={handleChange} />
-            <Input name='height' label={'Height:'} value={athleteHeight} onChange={(e)=>setAthleteHeight(e.target.value.toString())} />
 
             <input className='px-6 py-3 mt-10 shadow-sm rounded-xl outline-none self-center' type="submit" value="Submit" />
 

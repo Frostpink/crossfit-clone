@@ -1,6 +1,6 @@
 const Pool = require('pg').Pool
 const pool = new Pool({
-    user: 'me',
+    user: 'postgres',
     host: 'localhost',
     port: '5432',
     database: 'crossfit',
@@ -97,7 +97,7 @@ const getParticipants = (req, res) => {
     const query = `select a.name, a.id from competitions c
                    inner join registrations r on c.id = r.competition_id
                    inner join athletes a on a.id = r.athlete_id
-                   where c.id = '2';`
+                   where c.id = '${id}';`
 
     console.log('[GET]: participants in event id '+id);
 

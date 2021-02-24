@@ -1,11 +1,11 @@
 {
   "name": "projet-teamchloe",
   "version": "1.0.0",
-  "description": "Name | Student Number | Email\r -----|----------------|------\r Chloé Dumas | 300072427 | dduma032@uottawa.ca",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd .\\App\\frontend && npm start\" \"cd .\\App\\backend && npm start\""
+    "start": "concurrently \"cd ./App/frontend && npm start\" \"cd ./App/backend && npm start\""
   },
   "repository": {
     "type": "git",
