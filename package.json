@@ -18,7 +18,8 @@
     "url": "https://github.com/professor-forward/projet-teamchloe/issues"
   },
   "homepage": "https://github.com/professor-forward/projet-teamchloe#readme",
-  "devDependencies": {
-    "concurrently": "^5.3.0"
+  "devDependencies": {},
+  "dependencies": {
+    "lerna": "^4.0.0"
   }
 }
