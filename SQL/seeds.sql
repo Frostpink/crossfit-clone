@@ -1,3 +1,5 @@
+BEGIN;
+
 -- ATHLETES
 INSERT INTO athletes (name, date_of_birth, gender, height, weight, nationality) 
 VALUES 
@@ -17,6 +19,11 @@ INSERT INTO logins (athlete_id, email, password)
 SELECT id, 'sdonaway@mefit.ca', 'random-password'
 FROM athletes WHERE name = 'Sansone Donaway';
 
+-- ADDRESSES
+INSERT INTO addresses (street_number, street, city, postal_code, province)
+VALUES ('4493', 'Bayfield St', 'Richmond Hill', 'L4C3Y2', 'Ontario'),
+       ('1495', 'Main St', 'Moosomin', 'S0G3N0', 'Saskatchewan');
+
 -- CONTACT PERSONS
 INSERT INTO contact_persons (name, email, phone)
 VALUES ('Jeff Fotti', 'jfotti@rush.ca', '111-222-3333'),
@@ -24,9 +31,9 @@ VALUES ('Jeff Fotti', 'jfotti@rush.ca', '111-222-3333'),
 
 -- PARTNERS
 WITH contact AS (
- SELECT id 
-  	FROM contact_persons
-  	WHERE name = 'Jeff Fotti'
+	SELECT id
+	FROM contact_persons
+	WHERE name = 'Jeff Fotti'
 ), address AS (
   	SELECT id
   	FROM addresses
@@ -162,3 +169,4 @@ WHERE (SELECT amount FROM amount) < (SELECT capacity FROM cap);
 
 
 
+COMMIT;

@@ -19,7 +19,9 @@ export default function () {
 
     const fetchData = async () => {
 
-        const result = await axios.get<ICompetition[]>(`http://localhost:8080/competitions?sort=${sort}&get=id,name,venue,start_date_time,end_date_time`)
+        const result = await axios.get<ICompetition[]>(`http://localhost:8080/competitions?sort=${sort}`)
+
+        console.log(result)
 
         result.data.map((comp: ICompetition) => {
             comp.start_date_time = formatDate(comp.start_date_time)

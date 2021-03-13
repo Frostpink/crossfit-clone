@@ -54,8 +54,8 @@ CREATE TABLE IF NOT EXISTS partners (
 CREATE TABLE IF NOT EXISTS competitions (
     id integer PRIMARY KEY DEFAULT nextval('competition_id'),
     identifier VARCHAR(100) UNIQUE NOT NULL DEFAULT md5(random()::text),
-    created DATE,
-    modified DATE, 
+    created DATE DEFAULT NOW(),
+    modified DATE DEFAULT NOW(), 
     name VARCHAR(200),
     start_date DATE,
     end_date DATE,

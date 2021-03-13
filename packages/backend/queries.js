@@ -93,8 +93,7 @@ const getCompetitions = (req, res) => {
         sort = req.query.sort
     }
     if (req.query.get) {
-        get = req.query.
-        get
+        get = req.query.get
     }
 
     const query = `SELECT ${get} FROM competitions ORDER BY ${sort} ASC`
@@ -104,6 +103,7 @@ const getCompetitions = (req, res) => {
         if (error) {
             throw error
         }
+        console.log(`${results}`)
         res.status(200).json(results.rows)
     })
 
