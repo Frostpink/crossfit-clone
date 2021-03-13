@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd ./App/frontend && npm start\" \"cd ./App/backend && npm start\""
+    "start": "lerna run --parallel start"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,6 @@
     "url": "https://github.com/professor-forward/projet-teamchloe/issues"
   },
   "homepage": "https://github.com/professor-forward/projet-teamchloe#readme",
-  "devDependencies": {},
   "dependencies": {
     "lerna": "^4.0.0"
   }
