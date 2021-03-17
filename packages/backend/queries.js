@@ -2,7 +2,7 @@ const Pool = require('pg').Pool
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    port: '5434',
+    port: '5432',
     database: 'crossfit',
     password: 'password'
 })
@@ -34,11 +34,7 @@ const getAthletes = (req, res) => {
 // Get single athlete by id
 const getAthleteById = (req, res) => {
 
-    try {
-        const id = req.params.id
-    } catch (error) {
-        res.status(300).send('You need to pass the proper parameters.')
-    }
+    const id = req.params.id
 
     const query = `SELECT * FROM athletes WHERE id = '${id}'`
     console.log(`[GET] get athlete by id ${query}`)
@@ -59,7 +55,7 @@ const postAthlete = (req, res) => {
         const name = req.body.name
         const gender = req.body.gender
     } catch (error) {
-        res.status(300).send('You need to pass the proper parameters.')
+        res.status(400).send('You need to pass the proper parameters.')
     }
 
     let values = ''
@@ -77,7 +73,7 @@ const postAthlete = (req, res) => {
         .then(res => console.log(`[server] inserted ${ res.rows[0] }`))
         .catch(err => {
             console.error(err.stack)
-            res.status(400).send('ERROR WHILE INSERT')
+            res.status(500).send('ERROR WHILE INSERT')
         })
 
     res.status(201).send('OK')
@@ -89,13 +85,10 @@ const getCompetitions = (req, res) => {
 
     let sort = 'id'
     let get = '*'
-    if (req.query.sort) {
-        sort = req.query.sort
-    }
-    if (req.query.get) {
-        get = req.query.get
-    }
-
+    if (req.query.sort) sort = req.query.sort
+ 
+    if (req.query.get) get = req.query.get
+ 
     const query = `SELECT ${get} FROM competitions ORDER BY ${sort} ASC`
     console.log(`[GET] get all competitions ${query}`)
 
@@ -112,11 +105,7 @@ const getCompetitions = (req, res) => {
 // Get single competition by id
 const getCompetitionById = (req, res) => {
 
-    try {
-        const id = req.params.id
-    } catch (error) {
-        res.status(300).send("You must provide an id")
-    }
+    const id = req.params.id
 
     const query = `SELECT * FROM competitions WHERE id = '${id}'`
     console.log(`[GET] get single competition ${query}`)
@@ -133,11 +122,7 @@ const getCompetitionById = (req, res) => {
 // Get all participants in certain competition
 const getParticipants = (req, res) => {
 
-    try {
-        const id = req.params.id // competition id
-    } catch (error) {
-        res.status(300).send('You must provide an id.')
-    }
+    const id = req.params.id // competition id
 
     // const query = `select a.name, a.id from competitions c
     //                inner join registrations r on c.id = r.competition_id
@@ -159,11 +144,10 @@ const getParticipants = (req, res) => {
 // Get search result (by name)
 const getSearch = (req, res) => {
 
-    const str = req.params.str // string to search in names
-
-    const what = req.query.what
+    const str = req.query.str // string to search in names
+    const what = req.params.what // table name
     
-    const query = `select id, name from ${what} where name ~* '\\s${str}|^${str}';`
+    const query = `select * from ${what} where name ~* '\\s${str}|^${str}';`
     console.log(`[GET] search for ${ what } ${ query }`)
 
     pool.query(query, (err, results) => {
