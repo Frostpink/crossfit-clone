@@ -10,14 +10,25 @@ const getData = async (req, res) => {
 
 export default function Athletes() {
 
-    const { data: athletes } = useSWR(athletesEndpoint, getData)
+    const { data } = useSWR(athletesEndpoint, getData)
 
-    const onAthleteClick = (id: string) => {
-        console.log(`[click]: Athlete ${id} clicked.`)
-    }
-
-    return (<>
+    return <>
         <h1>Athletes</h1>
-        <Table callbackFunction={onAthleteClick} data={athletes} />
-    </>)
+        <Table>
+            <thead>
+                <th>name</th>
+                <th>gender</th>
+                <th>age</th>
+            </thead>
+            <tbody>
+                {data && data.map((athlete: { id: number; name: string; gender: string; age: string }) => (
+                    <tr key={athlete.id}>
+                        <td>{athlete.name}</td>
+                        <td>{athlete.gender}</td>
+                        <td>{athlete.age}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </Table>
+    </>
 }
