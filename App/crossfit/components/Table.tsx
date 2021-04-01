@@ -12,16 +12,16 @@ const Style = styled.table`
     tbody {
         ${tw`bg-white divide-y divide-gray-200`}
     }
-    tr {
+    tbody tr {
         ${tw`hover:bg-gray-300`}
     }
     td {
         ${tw`px-6 py-4 whitespace-nowrap`}
     }
 `
-export const Table: FunctionComponent = ({ children }) => {
+export const Table = ({ children }) => {
     return <>
-        <div className='shadow border-b overflow-hidden border-gray-100 sm:rounded-lg container mx-auto'>
+        <div className='shadow border-b overflow-hidden border-gray-50 sm:rounded-lg container mx-auto'>
             <Style>
                 {children}
             </Style>
