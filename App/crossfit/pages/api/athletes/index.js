@@ -16,6 +16,9 @@ export default async (req, res) => {
     try {
 
     if (req.method === 'POST') {
+        const { name } = req.query
+        console.log(name)
+        console.log('post',res)
         res.send(405)
     }
 

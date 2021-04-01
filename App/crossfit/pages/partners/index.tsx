@@ -20,22 +20,22 @@ interface Contact {
     name: string
 }
 
-export default function() {
+export default function Partners() {
 
     const { data: partners } = useSWR<Partner[]>('/api/partners', getData)
-    console.log( partners.map(partner => { 
-        const { data: contacts } = useSWR<Partner[]>(`/api/contact_persons/${partner.contact_person_id}`, getData)
-        return contacts
-    }) )
+    // console.log( partners.map(partner => { 
+    //     const { data: contacts } = useSWR<Partner[]>(`/api/contact_persons/${partner.contact_person_id}`, getData)
+    //     return contacts
+    // }) )
 
 
     return <>
         <Table>
             <thead>
                 <tr>
-                    <th>name</th>
-                    <th>contact person</th>
-                    <th>city</th>
+                    <th>partner name</th>
+                    {/* <th>contact person</th> */}
+                    {/* <th>city</th> */}
                 </tr>
             </thead>
             <tbody>

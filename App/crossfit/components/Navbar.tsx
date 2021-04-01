@@ -35,6 +35,7 @@ export default function Navbar() {
             <div className='ml-auto flex flex-row'>
                 <LinkItem href='/' name='Home' />
                 <LinkItem href='/athletes' name='Athletes'/>
+                <LinkItem href='/athletes/new' name='NewAthletes'/>
                 <LinkItem href='/competitions' name='Competitions'/>
                 <LinkItem href='/partners' name='Partners'/>
             </div>
