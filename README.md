@@ -21,6 +21,8 @@ Mark | Description | Comment
 
 J'ai utilisé LucidChart pour faire les diagrammes.
 
+NOTE : J'ai manqué de temps pour implémenter les POST, DELETE et PUT de mon site. Je n'ai aussi pas eu le temps de mettre à jour les migrations. Certaines composantes ne sont pas complétées à 100%, mais le tout va être terminé lors du livrable 4.
+
 J'ai utilisé Postgres pour la base de données et expressjs avec react pour l'application (voir à la fin pour l'installation).
 
 ### Diagramme ER
@@ -367,7 +369,7 @@ Aller sur le site https://nodejs.org/en/ et installer Node.js
 
 - Ovrir une shell psql
 
-- Si psql dans le terminal retourne l'erreur 'command not found', le PATH n'a peut être pas bien été installé. Donc il faut ajouter 'export PATH="/Library/PostgreSQL/11/bin:$PATH"' dans le ~/.zshrc ou ~/.bashrc dépendant si le terminal utilise zsh ou bash
+- Si psql dans le terminal retourne l'erreur 'command not found', le PATH n'a peut être pas bien été installé. Donc il faut ajouter 'export PATH="/Library/PostgreSQL/13/bin:$PATH"' dans le ~/.zshrc ou ~/.bashrc dépendant si le terminal utilise zsh ou bash
 
 - Utiliser le terminal se connecter à postgres avec la ligne
 ```zsh
@@ -379,6 +381,8 @@ remplacer PORT par le port établie lors de l'installation (par défault 5432)
 - Une fois connecté, il faut créer la base de données (crossfit)
 ```zsh
 create database crossfit
+ou
+createdb crossfit
 ```
 
 - faire exit afin de sortir de psql et cd au dossier du projet
@@ -392,47 +396,31 @@ remplacer PORT par le port établie lors de l'installation (par défault 5432)
 - maintenant executer les fichiers dans cet ordre
 ```psql
 psql -h localhost -p 5432 -U postgres -W -d crossfit -f ./SQL/schema.sql
-psql -h localhost -p 5432 -U postgres -W -d crossfit -f ./SQL/seed_athletes.sql
-psql -h localhost -p 5432 -U postgres -W -d crossfit -f ./SQL/seed_competitions.sql
-psql -h localhost -p 5432 -U postgres -W -d crossfit -f ./SQL/seed_registrations.sql
+psql -h localhost -p 5432 -U postgres -W -d crossfit -f ./SQL/seed.sql
 ```
 
-- base de donnes termine
+- base de donnes terminé
 
 4. Installer le site
 
 - Traverser au projet avec 'cd'
-
 - Installer les packages
-Du root './'
+  Du root './'
 ```zsh
+cd App/crossfit
 npm i
 ```
-Du frontend './App/frontend'
-```zsh
-cd App/frontend
-npm i
-```
-et du backend './App/backend'
-```zsh
-cd ../backend
-npm i
-```
-ensuite important de retourner au root avec
-```zsh
-cd ../..
-```
-
 5. Modifier les info pour la connection 
-- Aller à './App/backend/queries.js' et modifier port à la valeur établie lors de l'installation de postgres
-- Aller à './App/backend/queries.js' et modifier password au password établie lors de l'installation de postgres
-- S'assurer que les ports 8080 (backend) et 3000 (frontend) sont librent (sinon modifier à 'App/backend/index.js' et à 'App/frontend/.env')
+- Aller à './App/crossfit/package.json' et modifier port au besoin dans le script "dev"
+- Aller à './App/crossfit/pgConfig.js' et modifier les valeurs au besoin
 
 6. Exécuter le site web
-- cd au root du projet
-- exécuter 'npm start'
-- attendre un moment jusqu'à temps que le terminal affiche 'You can now view frontend in the browser. http://localhost:3000'
-- visiter le site web a 'http://localhost:3000'
+
+   Il faut s'assurer l'utilisation du port 5432 pour la base de données Postgres.
+- cd ./App/crossfit
+- exécuter 'npm run dev'
+- attendre un moment jusqu'à temps que le terminal affiche 'event - compiled successfully'
+- visiter le site web a 'http://localhost:3005'
 
 
 ## Démonstration du site web fonctionnel
@@ -446,14 +434,8 @@ Vue compétitions
 Vue créer un athlète
 ![athletes](Screenshots/view-create-athlete.png)
 
-Vue athlètes après l'ajout d'un athète
-![athletes](Screenshots/view-post-create-athlete.png)
-
 Il y possibilité de changer l'ordre d'affichage des tableaux des athlètes et compétitions (name asc)
 ![athletes](Screenshots/view-athlete-name-asc.png)
-
-On peut aussi rechercher un athlète par nom
-![athletes](Screenshots/view-search.png)
 
 Si on clique sur le nom d'un athlète, on va à son informations
 ![athletes](Screenshots/view-athlete-info.png)
@@ -463,3 +445,6 @@ Si on clique sur le nom d'une compétition, on va à la description de la compé
 
 
 
+On voit aussi un leaderboard pour cette compétition et les événements.
+
+![athletes](Screenshots/competition-leaderboard.png)
