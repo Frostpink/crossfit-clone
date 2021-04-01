@@ -27,7 +27,7 @@ app.get('/competitions/:id', db.getCompetitionById)
 
 app.get('/participants/:id', db.getParticipants)
 
-app.get('/search/:str', db.getSearch)
+app.get('/search/:what', db.getSearch)
 
 app.post('/athlete', db.postAthlete)
 

@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/professor-forward/projet-teamchloe#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "lerna": "^4.0.0"
   }
 }
