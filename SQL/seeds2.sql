@@ -92,19 +92,19 @@ WITH contact AS (
 ) INSERT INTO partners (name, contact_person_id, address_id) SELECT 'CrossFit Actus', (select id from contact), (select id from address);
 
 WITH contact AS (
-    SELECT id FROM contact_persons WHERE name = 'Dan' AND email = 'info@crossfitfortis.ca' AND phone = '6138370909'
+    SELECT id FROM contact_persons WHERE name = 'Andy Stewart' AND email = 'info@crossfit1855.com' AND phone = '6135589037'
 ), address AS (
     SELECT id FROM addresses WHERE street_number = '1523'AND street = 'Laperriere Ave'  AND city = 'Ottawa'  AND postal_code = 'K1Z7T1' AND province = 'Ontario'
 ) INSERT INTO partners (name, contact_person_id, address_id) SELECT 'CrossFit 1855', (select id from contact), (select id from address);
 
 WITH contact AS (
-    SELECT id FROM contact_persons WHERE name = 'Dan' AND email = 'info@crossfitfortis.ca' AND phone = '6138370909'
+    SELECT id FROM contact_persons WHERE name = 'Conor Oakley' AND email = 'oakley_fitness@hotmail.com' AND phone = '6132525331'
 ), address AS (
     SELECT id FROM addresses WHERE street_number = '340' AND street = 'Parkdale Ave'    AND city = 'Ottawa'  AND postal_code = 'K1Y2W5' AND province = 'Ontario'
 ) INSERT INTO partners (name, contact_person_id, address_id) SELECT 'CrossFit Hintonburg', (select id from contact), (select id from address);
 
 WITH contact AS (
-    SELECT id FROM contact_persons WHERE name = 'Dan' AND email = 'info@crossfitfortis.ca' AND phone = '6138370909'
+    SELECT id FROM contact_persons WHERE name = 'Jeff Fotti' AND email = 'wegotyou.crossfitrush@gmail.com' AND phone = '6134469496'
 ), address AS (
     SELECT id FROM addresses WHERE street_number = '729' AND street = 'Rue Industrielle'AND city = 'Rockland'AND postal_code = 'K4K1T2' AND province = 'Ontario'
 ) INSERT INTO partners (name, contact_person_id, address_id) SELECT 'CrossFit Rush', (select id from contact), (select id from address);
