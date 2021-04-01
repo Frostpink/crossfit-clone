@@ -59,7 +59,7 @@ export default function Competition({ id }) {
     const { data } = useSWR<Competition>(`/api/competitions/${id}`, getData)
     const { data: participants } = useSWR<Participant[]>(`/api/competitions/${id}/participants`, getData)
     const { data: events } = useSWR<Event[]>(`/api/competitions/${id}/events`, getData)
-    const { data: workouts } = useSWR(`/api/workouts/${events}`)
+    // const { data: workouts } = useSWR(`/api/workouts/${events}`)
 
     const { data: leaderboard } = useSWR<Leaderboard[]>(`/api/leaderboard`, getData)
     const { data: scores } = useSWR<Score[]>(`/api/leaderboard/scores`, getData)
@@ -76,7 +76,7 @@ export default function Competition({ id }) {
             <h3 className='font-medium text-lg ml-6'>Athletes Registered:</h3>
             <div className='flex flex-row justify-center flex-wrap container mx-auto'>
                 {participants && participants.map(athlete => (
-                    <AthleteInfo name={athlete.athlete_name} />
+                    <AthleteInfo key={athlete.athlete_id} name={athlete.athlete_name} />
                 ))}
             </div>
 

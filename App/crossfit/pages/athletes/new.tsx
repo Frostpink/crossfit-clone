@@ -22,7 +22,7 @@ export default function Athletes() {
     const [name, setName] = useState('')
 
     const postData = async () => {
-        await axios.post('/api/athletes', {name})
+        await axios.post('/api/athletes', {name:name})
     }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

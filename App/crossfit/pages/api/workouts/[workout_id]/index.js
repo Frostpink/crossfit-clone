@@ -19,8 +19,9 @@ export default async (req, res) => {
             workout_id = null
         } = req.query
 
-        if (workout_id === null) return res.send('missing id')
-        const query = 'select * from workouts where id = $1'
+        // if (workout_id === null) return res.send('missing id')
+        const query = `select * from workouts where id = $1`
+        console.log(query, workout_id)
 
         await pool.query(query, [ workout_id ]).then(response => {
 
@@ -29,7 +30,7 @@ export default async (req, res) => {
         }).catch(err => {
 
             res.send(300)
-            console.log(err.message)
+            console.log('[single workout error] ', err.message)
 
         })
     } else res.send(405)

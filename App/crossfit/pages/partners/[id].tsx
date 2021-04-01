@@ -46,13 +46,6 @@ function EventInfo({ name }) {
         </div>
     </>
 }
-function AthleteInfo({ name }) {
-    return <>
-        <div className='bg-gray-100 border border-gray-200 shadow px-6 py-3 m-1 rounded-2xl hover:bg-gray-50'>
-            <div>{ name }</div>
-        </div>
-    </>
-}
 
 export default function Competition({ id }) {
 
@@ -66,31 +59,31 @@ export default function Competition({ id }) {
 
     return <>
         <div className='flex flex-col'>
-            {data && <>
+            {/* {data && <>
                 <DataLine> COMPETITION ID: {data.competition_id}</DataLine>
                 <DataLine> NAME: {data.name} </DataLine>
                 <DataLine> CONTACT: {data.contact_name}</DataLine>
-            </>}
+            </>} */}
 
             {/* ATHLETES REGISTERED */}
-            <h3 className='font-medium text-lg ml-6'>Athletes Registered:</h3>
+            {/* <h3 className='font-medium text-lg ml-6'>Athletes Registered:</h3>
             <div className='flex flex-row justify-center flex-wrap container mx-auto'>
                 {participants && participants.map(athlete => (
                     <AthleteInfo name={athlete.athlete_name} />
                 ))}
-            </div>
+            </div> */}
 
             {/* EVENTS */}
-            <h3 className='font-medium text-lg ml-6'>Events:</h3>
+            {/* <h3 className='font-medium text-lg ml-6'>Events:</h3>
             <div className='flex flex-row flex-wrap container mx-auto'>
                 {events && events.map(event => (
                     <EventInfo name={event.event_name} />
 
                 ))}
-            </div>
+            </div> */}
 
             {/* LEADERBOARD */}
-            <Table>
+            {/* <Table>
                 <thead>
                     <tr>
                         <th>Rank</th>
@@ -113,7 +106,7 @@ export default function Competition({ id }) {
                         </tr>
                     ))}
                 </tbody>
-            </Table>
+            </Table> */}
 
         </div>
     </>
