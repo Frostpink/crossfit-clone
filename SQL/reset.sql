@@ -1,7 +1,13 @@
 
+drop view if exists leaderboard;
+drop view if exists scores;
+drop view if exists workouts_full;
 drop view if exists participants;
 drop table if exists results;
 drop table if exists events;
+drop table if exists workout_movements;
+drop table if exists movements;
+drop table if exists workouts;
 drop table if exists registrations;
 drop table if exists capacity;
 drop table if exists competitions;
