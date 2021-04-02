@@ -1,14 +1,4 @@
-import {
-    Pool
-} from 'pg'
-
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    database: 'crossfit',
-    password: 'password'
-})
+import pool from '@pool'
 
 export default async (req, res) => {
 

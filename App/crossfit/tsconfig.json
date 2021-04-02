@@ -18,6 +18,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
+    "paths": { 
+      "@pool": ["pg.config.js"],
+  },
     "jsxImportSource": "@emotion/react", // for the css prop
   },
   "files": ["twin.d.ts"],
