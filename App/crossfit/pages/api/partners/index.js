@@ -1,19 +1,42 @@
+// api/partners
+
 import pool from '@pool'
 
 export default async (req, res) => {
 
-    if (req.method === 'GET') {
-        const query = `select * from partners`
+    try {
 
-        await pool.query(query).then(response => {
+        if (req.method === 'POST') {
+            const {
+                name
+            } = req.body
+            if (!name) return res.send('missing name')
 
-            res.status(200).json(response.rows)
+            const query = 'insert into partners (name) values ($1) returning id'
+            await pool.query(query, [name]).then(response => {
+                res.status(201).json(response.rows[0])
+            }).catch(err => {
+                throw err
+            })
+        }
 
-        }).catch(err => {
+        if (req.method === 'GET') {
+            const query = `select * from partners`
 
-            res.send(300)
-            console.log(err)
+            await pool.query(query).then(response => {
 
-        })
+                res.status(200).json(response.rows)
+
+            }).catch(err => {
+
+                res.send(300)
+                console.log(err)
+
+            })
+        }
+
+    } catch (err) {
+        console.error(err.message)
     }
+
 }
