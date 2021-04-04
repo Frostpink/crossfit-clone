@@ -5,29 +5,38 @@ import pool from '@pool'
 export default async (req, res) => {
     try {
 
-    if (req.method === 'POST') {
-        const { name } = req.query
-        console.log(name)
-        console.log('post',res)
-        res.send(405)
-    }
+        if (req.method === 'POST') {
+            const {
+                name
+            } = req.body
+            if (!name) return res.send('missing name')
 
-    if (req.method === 'GET') {
-        const { sort } = req.query
-        if (!sort) return res.send('missing sort param')
+            const query = 'insert into athletes (name) values ($1) returning athlete_id'
+            await pool.query(query, [name]).then(response => {
+                res.status(201).json(response.rows[0])
+            }).catch(err => {
+                throw err
+            })
+        }
 
-        const query = `select * from athletes order by ${sort}`
+        if (req.method === 'GET') {
+            const {
+                sort
+            } = req.query
+            if (!sort) return res.send('missing sort param')
 
-        await pool.query(query).then(response => {
+            const query = `select * from athletes order by ${sort}`
 
-            res.status(200).json(response.rows)
+            await pool.query(query).then(response => {
 
-        }).catch(err => {
+                res.status(200).json(response.rows)
 
-            throw err
+            }).catch(err => {
 
-        })
-    }
+                throw err
+
+            })
+        }
 
     } catch (err) {
         res.send(1000)
