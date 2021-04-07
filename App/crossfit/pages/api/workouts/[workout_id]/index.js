@@ -1,3 +1,5 @@
+// api/workouts/[workout_id]
+
 import pool from '@pool'
 
 export default async (req, res) => {

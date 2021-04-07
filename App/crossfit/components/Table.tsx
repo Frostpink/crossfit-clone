@@ -7,7 +7,7 @@ const Style = styled.table`
         ${tw`bg-gray-100`}
     }
     th {
-        ${tw`text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider`}
+        ${tw`text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider relative pr-4 select-none`}
     }
     tbody {
         ${tw`bg-white divide-y divide-gray-200`}

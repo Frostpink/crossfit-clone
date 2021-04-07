@@ -5,7 +5,7 @@ import {
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    port: 5434,
+    port: 5432,
     database: 'crossfit',
     password: 'password'
 })
