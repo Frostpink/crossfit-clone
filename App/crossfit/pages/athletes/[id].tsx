@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router'
-import Table from '../../components/Table'
 import axios from 'axios'
 import useSWR from 'swr'
 import tw from 'twin.macro'
@@ -26,10 +24,7 @@ const getData = async (req) => {
 
 const DataLine = tw.p`py-1 bg-gray-200 px-4 rounded-full text-black self-start my-2 shadow border-gray-500`
 
-export default function Athlete() {
-
-    const router = useRouter()
-    const { id } = router.query
+export default function Athlete({ id }) {
 
     const { data } = useSWR(`${athletesEndpoint}/${id}`, getData)
 
@@ -47,4 +42,8 @@ export default function Athlete() {
             </>}
         </div>
     </>
+}
+
+Athlete.getInitialProps = ({ query: { id } }) => {
+    return { id }
 }
