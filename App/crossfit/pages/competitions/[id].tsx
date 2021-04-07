@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
-import Table from '../../components/Table'
+import Table from '@components/Table'
+import Th from '@components/Th'
 import axios from 'axios'
 import useSWR from 'swr'
 import tw from 'twin.macro'
@@ -93,11 +94,11 @@ export default function Competition({ id }) {
             <Table>
                 <thead>
                     <tr>
-                        <th>Rank</th>
-                        <th>Athlete</th>
-                        <th>Points</th>
+                        <Th onClick={() => {}} sort={'rank asc'} text={'Rank'} />
+                        <Th onClick={() => {}} sort={'rank asc'} text={'Athlete'} />
+                        <Th onClick={() => {}} sort={'rank asc'} text={'Points'} />
                         {events && events.map(event => (
-                            <th>{event.event_name}</th>
+                            <Th onClick={() => {}} sort={'rank asc'} text={event.event_name} />
                         ))}
                     </tr>
                 </thead>
