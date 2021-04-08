@@ -8,9 +8,9 @@ export default async (req, res) => {
         const {
             id
         } = req.query
-        const query = `select * from partners where id = ${id}`
+        const query = `select * from partners where id = $1`
 
-        await pool.query(query).then(response => {
+        await pool.query(query, [id]).then(response => {
 
             res.status(200).json(response.rows[0])
 
