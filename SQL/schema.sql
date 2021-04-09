@@ -59,13 +59,14 @@ CREATE TABLE competitions (
     identifier VARCHAR(100) UNIQUE NOT NULL DEFAULT md5(random()::text),
     created DATE DEFAULT NOW(),
     modified DATE DEFAULT NOW(), 
-    name VARCHAR(200),
+    name VARCHAR(200) not null,
     start_date DATE,
     end_date DATE,
     amount_events INTEGER,
     contact_person_id INTEGER NOT NULL REFERENCES contact_persons(id),
     address_id INTEGER NOT NULL REFERENCES addresses(id),
     partner_id INTEGER NOT NULL REFERENCES partners(id)
+    -- unique (competition_id, name)
 );
 
 CREATE TABLE capacity (

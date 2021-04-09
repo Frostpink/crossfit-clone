@@ -1,0 +1,16 @@
+- [ ] show events info in Competition View
+- [x] create new competition
+  - [x] enter address
+  - [x] enter contact
+  - [x] enter partner
+- [ ] add more input for create athlete
+- [ ] leaderboard sort
+- [ ] filter
+  - [ ] gender
+  - [ ] competition
+- [x] show sort method 
+  - [x] in athletes
+  - [x] in leaderboard
+- [ ] fix migrations
+- [ ] register athletes to competitions
+- [ ] add athlete results
