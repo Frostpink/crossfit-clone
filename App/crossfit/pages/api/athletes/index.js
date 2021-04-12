@@ -1,8 +1,14 @@
 // api/athletes
 
 import pool from '@pool'
+import * as yup from 'yup'
+
+const athleteSort = yup.object().shape({
+    sort: yup.string().default('name asc').oneOf(['name asc', 'name desc', 'age asc', 'age desc', 'gender asc', 'gender desc']).required()
+})
 
 export default async (req, res) => {
+
     try {
 
         if (req.method === 'POST') {
@@ -20,10 +26,10 @@ export default async (req, res) => {
         }
 
         if (req.method === 'GET') {
+            console.log(`[${(new Date).getHours()}:${(new Date).getMinutes()}]: `, req.query)
             const {
                 sort
-            } = req.query
-            if (!sort) return res.send('missing sort param')
+            } = await athleteSort.validate(req.query)
 
             const query = `select * from athletes order by ${sort}`
 
@@ -39,6 +45,11 @@ export default async (req, res) => {
         }
 
     } catch (err) {
+        if (err.name && err.errors) {
+            console.log(err.name, err.errors)
+            return res.send(err.name)
+        }
+        console.log(err.message)
         res.send(1000)
     }
 }

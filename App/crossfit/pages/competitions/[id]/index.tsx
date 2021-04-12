@@ -4,6 +4,7 @@ import Th from '@components/Th'
 import axios from 'axios'
 import useSWR from 'swr'
 import tw from 'twin.macro'
+import Link from 'next/link'
 
 interface Competition {
     competition_id: number
@@ -74,12 +75,12 @@ export default function Competition({ id }) {
             </>}
 
             {/* ATHLETES REGISTERED */}
-            {/* <h3 className='font-medium text-lg ml-6'>Athletes Registered:</h3>
+            <h3 className='font-medium text-lg ml-6'>Athletes Registered:</h3>
             <div className='flex flex-row justify-center flex-wrap container mx-auto'>
                 {participants && participants.map(athlete => (
                     <AthleteInfo key={athlete.athlete_id} name={athlete.athlete_name} />
                 ))}
-            </div> */}
+            </div>
 
             {/* EVENTS */}
             <h3 className='font-medium text-lg ml-6'>Events:</h3>
@@ -89,6 +90,8 @@ export default function Competition({ id }) {
 
                 ))}
             </div>
+
+            <Link href={`/competitions/${id}/register`}><div className='bg-gray-100 border border-gray-200 shadow px-6 py-3 m-1 rounded-2xl hover:bg-gray-50 focus:outline-none'>REGISTER ATHLETE</div></Link>
 
             {/* LEADERBOARD */}
             <Table>
