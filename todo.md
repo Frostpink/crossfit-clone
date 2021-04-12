@@ -11,11 +11,13 @@
 - [x] show sort method 
   - [x] in athletes
   - [x] in leaderboard
-- [ ] fix migrations
+- [x] fix migrations
 - [ ] register athletes to competitions
   - [x] api/simple ui
   - [ ] searchable athlete
   - [x] it's own page
-- [ ] add athlete results
+- [x] add athlete results
 - [ ] add events to competition
 - [ ] make presentation
+- [ ] edit athlete
+- [ ] delete athlete
