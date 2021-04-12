@@ -5,6 +5,7 @@ import axios from 'axios'
 import useSWR from 'swr'
 import tw from 'twin.macro'
 import Link from 'next/link'
+import { useState } from 'react'
 
 interface Competition {
     competition_id: number
@@ -48,10 +49,19 @@ function EventInfo({ name }) {
         </div>
     </>
 }
-function AthleteInfo({ name }) {
+function AthleteInfo({ id, name, competition_id }) {
+
+    const [open, setOpen] = useState<boolean>(false)
+
+    // const { data: results } = useSWR<{event_name: string; score: string}[]>(`/api/results`, getData)
+    const { data: results } = useSWR<{event_name: string; score: string}[]>(`/api/results?athlete_id=${id}&competition_id=${competition_id}`, getData)
+
     return <>
-        <div className='bg-gray-100 border border-gray-200 shadow px-6 py-3 m-1 rounded-2xl hover:bg-gray-50'>
-            <div>{ name }</div>
+        <div className='bg-gray-100 border border-gray-200 shadow px-6 py-3 m-1 rounded-2xl hover:bg-gray-50' onClick={() => setOpen(!open)}>
+            <div>{ id } { name }</div>
+            {open && results.map(result => 
+                <div key={result.event_name}>{ result.event_name }: { result.score }</div>
+            )}
         </div>
     </>
 }
@@ -78,7 +88,7 @@ export default function Competition({ id }) {
             <h3 className='font-medium text-lg ml-6'>Athletes Registered:</h3>
             <div className='flex flex-row justify-center flex-wrap container mx-auto'>
                 {participants && participants.map(athlete => (
-                    <AthleteInfo key={athlete.athlete_id} name={athlete.athlete_name} />
+                    <AthleteInfo key={athlete.athlete_id} id={athlete.athlete_id} name={athlete.athlete_name} competition_id={id} />
                 ))}
             </div>
 
