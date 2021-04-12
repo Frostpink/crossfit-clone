@@ -6,22 +6,20 @@ Chloé Dumas | 300072427 | dduma032@uottawa.ca
 
 [Livrable 1](livrable1/README.md)
 [Livrable 2](livrable2/README.md)
+[Livrable 3](livrable3/README.md)
 
-## Deliverable 2
+## Deliverable 3
 
 Mark | Description | Comment
 ---|---|---
-2.0 | ER Model | See below
-2.0 | Relational Model / Schema SQL | See below
-2.0 | SQL seed/ examples / migrations |  
-2.0 | Application |  
+3.0 | Presentation slides                      |  
+3.0 | Application                              | See images below 
+2.0 | SQL seed | See /SQL/seeds.sql 
+1.0 | ER model / Relational model (SQL schema) | See images below 
 1.0 | README.md has all info | Yes
-1.0 | Using git | Yes
 /10 | |
 
 J'ai utilisé LucidChart pour faire les diagrammes.
-
-NOTE : J'ai manqué de temps pour implémenter les POST, DELETE et PUT de mon site. Je n'ai aussi pas eu le temps de mettre à jour les migrations. Certaines composantes ne sont pas complétées à 100%, mais le tout va être terminé lors du livrable 4.
 
 J'ai utilisé Postgres pour la base de données et expressjs avec react pour l'application (voir à la fin pour l'installation).
 
@@ -46,66 +44,152 @@ Soit entrer la ligne sql suivante ou créer la base de données avec pgAdmin.
 CREATE DATABASE crossfit;
 ```
 
-Une fois la base de données créé, c'est possible d'utiliser le schema.sql afin de créer tous les schémas.
+Une fois la base de données créé, c'est possible d'utiliser le `schema.sql` dans le dossier `SQL/schema.sql` afin de créer tous les schémas.
 
-Les lignes SQL suivante vont créer le schéma athletes.
+Voici quelques exmples :
+
+Les lignes SQL suivante vont créer un événement.
 
 ```sql
-CREATE SEQUENCE IF NOT EXISTS athlete_id;
-CREATE TABLE athletes (
-    athlete_id integer PRIMARY KEY DEFAULT nextval('athlete_id'),
-    identifier VARCHAR(100) UNIQUE NOT NULL DEFAULT md5(random()::text),
-    created DATE DEFAULT NOW(),
-    modified DATE DEFAULT NOW(),
-    name VARCHAR(200),
-    date_of_birth DATE,
-    gender VARCHAR(30),
-    height NUMERIC(4, 1),
-    weight NUMERIC(4, 1),
-    nationality VARCHAR(100)
+CREATE TABLE events (
+    competition_id INTEGER NOT NULL,
+    event_name VARCHAR(100) NOT NULL,
+    workout_id INTEGER,
+    PRIMARY KEY (competition_id, event_name),
+    FOREIGN KEY (competition_id) REFERENCES competitions(competition_id),
+    FOREIGN KEY (workout_id) REFERENCES workouts(id)
 );
 ```
 
-Les lignes suivantes vont créer le schéma competitions.
+Un événement contient des workouts, et les workouts contiennent des movements.
 
 ```sql
-CREATE SEQUENCE IF NOT EXISTS competition_id;
-CREATE TABLE competitions (
-    competition_id integer PRIMARY KEY DEFAULT nextval('competition_id'),
-    identifier VARCHAR(100) UNIQUE NOT NULL DEFAULT md5(random()::text),
-    created DATE DEFAULT NOW(),
-    modified DATE DEFAULT NOW(), 
-    name VARCHAR(200),
-    start_date DATE,
-    end_date DATE,
-    amount_events INTEGER,
-    contact_person_id INTEGER NOT NULL REFERENCES contact_persons(id),
-    address_id INTEGER NOT NULL REFERENCES addresses(id),
-    partner_id INTEGER NOT NULL REFERENCES partners(id)
+CREATE TABLE workouts (
+    id SERIAL primary key,
+    name TEXT NOT NULL,
+    score TEXT NOT NULL,
+    secondary_score TEXT,
+    tie_break TEXT,
+    secondary_tie_break TEXT,
+    description TEXT,
+    time_cap text,
+    UNIQUE (name)
+);
+
+CREATE TABLE movements (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    type TEXT,
+    cap TEXT,
+    UNIQUE (name, type, cap)
+);
+
+CREATE TABLE workout_movements (
+    workout_id INTEGER REFERENCES workouts(id),
+    movement_id INTEGER REFERENCES movements(id),
+    sequence_number INTEGER NOT NULL,
+    PRIMARY KEY (workout_id, movement_id)
 );
 ```
 
-La ligne suivante va créer le schéma registrations (relie les athlètes aux compétitions).
+Et finalement, chaque athlète enregistré à une compétition peut avoir des résultats liés à un événement.
 
 ```sql
-CREATE TABLE registrations (
-    competition_id INTEGER,
-    athlete_id INTEGER,
-    registration_date DATE DEFAULT NOW(),
-    PRIMARY KEY (competition_id, athlete_id),
-    CONSTRAINT fk_competition FOREIGN KEY (competition_id) REFERENCES competitions(competition_id) ON DELETE CASCADE,
-    CONSTRAINT fk_athlete FOREIGN KEY (athlete_id) REFERENCES athletes(athlete_id) ON DELETE CASCADE
+CREATE TABLE results (
+    athlete_id INTEGER NOT NULL,
+    event_name VARCHAR(100) NOT NULL,
+    competition_id INTEGER NOT NULL,
+    score TEXT,
+    secondary_score TEXT,
+    tie_break TEXT,
+    secondary_tie_break TEXT,
+    PRIMARY KEY (competition_id, event_name, athlete_id),
+    FOREIGN KEY (athlete_id) REFERENCES athletes(athlete_id),
+    FOREIGN KEY (competition_id, event_name) REFERENCES events(competition_id, event_name)
 );
 ```
+
+Afin d'afficher le leaderboard, j'ai implémenté 2 views. 
+La view `scores` affiche les ranking de chaque événement et la view `leaderboard` regroupe ces rankings par compétition.
+
+```sql
+CREATE VIEW scores AS
+SELECT competition_name,
+    competition_id,
+    event_name,
+    athlete_name,
+    athlete_id,
+    rank () over (
+        PARTITION by competition_id,
+        event_name
+        ORDER BY results.score IS NULL,
+            CASE
+                WHEN workouts.score LIKE '%DESC%' THEN results.score
+            END DESC,
+            CASE
+                WHEN workouts.score LIKE '%ASC%' THEN results.score
+            END ASC,
+            CASE
+                WHEN results.score IS NULL
+                AND workouts.secondary_score LIKE '%DESC%' THEN results.secondary_score
+            END DESC,
+            CASE
+                WHEN results.score IS NULL
+                AND workouts.secondary_score LIKE '%ASC%' THEN results.secondary_score
+            END ASC
+    ),
+    results.score result_score,
+    workouts.score workout_score,
+    results.secondary_score result_secondary_score,
+    workouts.secondary_score workout_secondary_score
+FROM participants
+    FULL JOIN EVENTS USING(competition_id)
+    FULL JOIN results USING(athlete_id, event_name, competition_id)
+    INNER JOIN workouts ON workouts.id = workout_id;
+
+
+CREATE VIEW leaderboard AS WITH result AS (
+    SELECT competition_name,
+        competition_id,
+        athlete_name,
+        athlete_id,
+        rank
+    FROM scores
+),
+board AS (
+    SELECT competition_id,
+        athlete_id,
+        sum(rank) AS points
+    FROM result
+    GROUP BY competition_id,
+        athlete_id
+    ORDER BY points ASC
+)
+SELECT competition_name,
+    competition_id,
+    rank () over (
+        PARTITION by competition_id
+        ORDER BY points ASC
+    ),
+    athlete_name,
+    athlete_id,
+    points
+FROM board
+    INNER JOIN participants USING(athlete_id, competition_id)
+ORDER BY competition_name ASC,
+    rank ASC;
+```
+
+
 
 ### Exemple de SQL
 Voir ./SQL/test_livrable3.sql
 
-#### INSERT
+#### INSERT (Quelques exemples seulement)
+
+**NOTE : Exécuter le fichier seeds.sql pour avoir la liste complète des seeds.**
 
 La ligne sql suivante ajoute quelques athletes.
-
-NOTE : Exécuter le fichier seeds.sql pour avoir la liste complète des seeds.
 
 ```sql
 INSERT INTO athletes (name, gender)
