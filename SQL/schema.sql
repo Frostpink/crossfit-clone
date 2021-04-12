@@ -186,9 +186,7 @@ create view leaderboard as
          rank
     from scores
   ), board as (
-  select competition_name, 
-         competition_id,
-         athlete_name, 
+  select competition_id,
          athlete_id,
          sum(rank) as points
   from result

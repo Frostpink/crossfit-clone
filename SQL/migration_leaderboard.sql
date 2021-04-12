@@ -45,7 +45,7 @@ create view leaderboard as
   )
   select competition_name,
          competition_id,
-  		 rank () over (partition by competition_id order by points asc),
+  		   rank () over (partition by competition_id order by points asc),
          athlete_id,
          athlete_name,
          points
