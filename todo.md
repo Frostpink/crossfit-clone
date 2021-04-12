@@ -18,6 +18,6 @@
   - [x] it's own page
 - [x] add athlete results
 - [ ] add events to competition
-- [ ] make presentation
+- [x] make presentation
 - [ ] edit athlete
 - [ ] delete athlete

@@ -26,7 +26,7 @@ export default async (req, res) => {
         }
 
         if (req.method === 'GET') {
-            console.log(`[${(new Date).getHours()}:${(new Date).getMinutes()}]: `, req.query)
+            console.log(`[${(new Date).getHours()}:${(new Date).getMinutes()}] GET athletes: `, req.query)
             const {
                 sort
             } = await athleteSort.validate(req.query)

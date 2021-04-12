@@ -58,7 +58,7 @@ function AthleteInfo({ id, name, competition_id }) {
 
     return <>
         <div className='bg-gray-100 border border-gray-200 shadow px-6 py-3 m-1 rounded-2xl hover:bg-gray-50' onClick={() => setOpen(!open)}>
-            <div>{ id } { name }</div>
+            <div>{ name }</div>
             {open && results.map(result => 
                 <div key={result.event_name}>{ result.event_name }: { result.score }</div>
             )}

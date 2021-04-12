@@ -26,7 +26,8 @@ export default function Register({ id }) {
 
     const [errorName, setErrorName] = useState('')
 
-    const { data: athletes } = useSWR<Athlete[]>(`/api/athletes`, getData)
+    const [searchValue, setSearchValue] = useState<string>('')
+    const { data: athletes } = useSWR<Athlete[]>(`/api/athletes/filter?searchValue=${searchValue}`, getData)
     const [athlete, setAthlete] = useState({} as Athlete)
     const [showAthletes, setShowAthletes] = useState(false)
 
@@ -53,6 +54,7 @@ export default function Register({ id }) {
                 {/* PARTNER */}
                 <div>
                     <button type='button' className='border border-gray-500' onClick={() => setShowAthletes(!showAthletes)}>{athlete.name || 'Select an athlete'}</button>
+                    <input type='text' placeholder='search' value={searchValue} onChange={e => setSearchValue(e.target.value)} />
                     {showAthletes && athletes && athletes.map(athlete => (
                         <button className='bg-gray-100 border border-gray-200 shadow px-6 py-3 m-1 rounded-2xl hover:bg-gray-50' type='button' key={athlete.athlete_id} onClick={() => { setAthlete(athlete); setShowAthletes(false) }}>{athlete.name}</button>
                     ))}
