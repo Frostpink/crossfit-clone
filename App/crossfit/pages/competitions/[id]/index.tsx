@@ -63,7 +63,7 @@ export default function Competition({ id }) {
     const { data: events } = useSWR<Event[]>(`/api/competitions/${id}/events`, getData)
     // const { data: workouts } = useSWR(`/api/workouts/${events}`)
 
-    const { data: leaderboard } = useSWR<Leaderboard[]>(`/api/leaderboard`, getData)
+    const { data: leaderboard } = useSWR<Leaderboard[]>(`/api/leaderboard?competition=${id}`, getData)
     const { data: scores } = useSWR<Score[]>(`/api/leaderboard/scores`, getData)
 
     return <>

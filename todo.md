@@ -7,10 +7,15 @@
 - [ ] leaderboard sort
 - [ ] filter
   - [ ] gender
-  - [ ] competition
+  - [x] competition
 - [x] show sort method 
   - [x] in athletes
   - [x] in leaderboard
 - [ ] fix migrations
 - [ ] register athletes to competitions
+  - [x] api/simple ui
+  - [ ] searchable athlete
+  - [x] it's own page
 - [ ] add athlete results
+- [ ] add events to competition
+- [ ] make presentation

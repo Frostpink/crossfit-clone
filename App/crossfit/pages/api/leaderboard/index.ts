@@ -1,7 +1,11 @@
 // api/leaderboard
 
-
 import pool from '@pool'
+import * as yup from 'yup'
+
+const competitionId = yup.object().shape({
+    competition: yup.number().required(),
+})
 
 // Accepts the array and key
 const groupBy = (array, key) => {
@@ -31,22 +35,32 @@ const groupBy2 = (array, key) => {
 
 export default async (req, res) => {
 
-    if (req.method === 'GET') {
-        // const query = `select competition_name, event_name, athlete_name, leaderboard.rank leaderboard_rank, scores.rank event_rank, leaderboard.points leaderboard_points 
-                    //    from leaderboard inner join scores using(competition_name, athlete_name)`
-        const query = `select competition_name, rank leaderboard_rank, athlete_name, points leaderboard_points from leaderboard`
+    try {
+        if (req.method === 'GET') {
+            // const query = `select competition_name, event_name, athlete_name, leaderboard.rank leaderboard_rank, scores.rank event_rank, leaderboard.points leaderboard_points 
+            //    from leaderboard inner join scores using(competition_name, athlete_name)`
 
-        await pool.query(query).then(response => {
+            const {
+                competition
+            } = await competitionId.validate(req.query)
 
-            // const leaderboardGroupedByPerson = groupBy2(response.rows, 'athlete_name')
+            const query = `select competition_name, rank leaderboard_rank, athlete_name, points leaderboard_points from leaderboard where competition_id = $1`
 
-            res.status(200).json(response.rows)
+            await pool.query(query, [competition]).then(response => {
 
-        }).catch(err => {
+                // const leaderboardGroupedByPerson = groupBy2(response.rows, 'athlete_name')
 
-            res.send(300)
-            console.log(err)
+                res.status(200).json(response.rows)
 
-        })
-    } else res.send('only get method is supported')
+            }).catch(err => {
+
+                res.send(300)
+                console.log(err)
+
+            })
+        } else res.send('only get method is supported')
+    } catch (err) {
+        console.log(err)
+        res.send(1000)
+    }
 }

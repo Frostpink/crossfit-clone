@@ -155,10 +155,12 @@ ORDER BY workouts.id, sequence_number;
 
 create view scores as
   select competition_name,
+    competition_id,
     event_name, 
     athlete_name, 
+    athlete_id,
     rank () over (
-      partition by competition_name, event_name
+      partition by competition_id, event_name
       order by results.score is null,
              case when workouts.score like '%DESC%' then results.score end desc,
              case when workouts.score like '%ASC%' then results.score end asc,
@@ -178,22 +180,29 @@ create view scores as
 create view leaderboard as
   with result as (
   select competition_name, 
+         competition_id,
          athlete_name, 
+         athlete_id,
          rank
     from scores
   ), board as (
   select competition_name, 
+         competition_id,
          athlete_name, 
+         athlete_id,
          sum(rank) as points
   from result
-  group by competition_name, athlete_name
+  group by competition_id, athlete_id
   order by points asc
   )
   select competition_name,
-  		 rank () over (partition by competition_name order by points asc),
+         competition_id,
+  		 rank () over (partition by competition_id order by points asc),
          athlete_name,
+         athlete_id,
          points
   from board
+  inner join participants using(athlete_id, competition_id)
   order by competition_name asc, rank asc
   ;
 
