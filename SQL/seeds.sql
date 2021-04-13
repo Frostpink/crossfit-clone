@@ -807,7 +807,39 @@ SELECT (
     );
 
 
+INSERT INTO EVENTS (competition_id, event_name, workout_id)
+SELECT (
+        SELECT competition_id
+        FROM competitions
+        WHERE name = 'April 2021'
+    ),
+    'Max burpees for April',
+    (
+        SELECT id
+        FROM workouts
+        WHERE name = 'Burpees in 7 min'
+    );
+
+
 -- insert results
+WITH event AS (
+    SELECT competition_id,
+        event_name
+    FROM EVENTS
+    WHERE event_name = 'Max burpees for April'
+)
+INSERT INTO results (athlete_id, event_name, competition_id, score)
+SELECT (
+        SELECT athlete_id
+        FROM athletes
+        WHERE name = 'Sydney Desaulniers'
+    ),
+    event_name,
+    competition_id,
+    '200'
+FROM event;
+
+
 WITH event AS (
     SELECT competition_id,
         event_name
