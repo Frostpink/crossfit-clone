@@ -519,7 +519,8 @@ Vue créer un athlète
 ![athletes](Screenshots/view-create-athlete.png)
 
 Il y possibilité de changer l'ordre d'affichage des tableaux des athlètes et compétitions (name asc)
-![athletes](Screenshots/view-athlete-name-asc.png)
+
+![athletes sort](gifs/sort_athletes.gif)
 
 Si on clique sur le nom d'un athlète, on va à son informations
 ![athletes](Screenshots/view-athlete-info.png)
@@ -532,3 +533,16 @@ Si on clique sur le nom d'une compétition, on va à la description de la compé
 On voit aussi un leaderboard pour cette compétition et les événements.
 
 ![athletes](Screenshots/competition-leaderboard.png)
+
+On peut inscrire un athlète à une compétition.
+![athletes](gifs/register_athlete.gif)
+
+On peut enlever un athlète de la base de donné.
+![athletes](gifs/delete_athlete.gif)
+
+
+
+
+
+
+
