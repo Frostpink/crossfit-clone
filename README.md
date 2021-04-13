@@ -12,7 +12,7 @@ Chloé Dumas | 300072427 | dduma032@uottawa.ca
 
 Mark | Description | Comment
 ---|---|---
-3.0 | Presentation slides                      |  
+3.0 | Presentation slides                      | [presentation](presentation_300072427.pdf) 
 3.0 | Application                              | See images below 
 2.0 | SQL seed | See /SQL/seeds.sql 
 1.0 | ER model / Relational model (SQL schema) | See images below 
