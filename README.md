@@ -542,6 +542,10 @@ On peut enlever un athlète de la base de donné.
 
 
 
+On peut ajouter une nouvelle competition.
+
+![athletes](gifs/new_competition.gif)
+
 
 
 
