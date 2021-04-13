@@ -74,7 +74,7 @@ export default function Competition({ id }) {
     // const { data: workouts } = useSWR(`/api/workouts/${events}`)
 
     const { data: leaderboard } = useSWR<Leaderboard[]>(`/api/leaderboard?competition=${id}`, getData)
-    const { data: scores } = useSWR<Score[]>(`/api/leaderboard/scores`, getData)
+    const { data: scores } = useSWR<Score[]>(`/api/leaderboard/scores?competition=${id}`, getData)
 
     return <>
         <div className='flex flex-col'>

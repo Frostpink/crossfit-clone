@@ -2,24 +2,42 @@ import pool from '@pool'
 
 export default async (req, res) => {
 
-    console.log('[GET] single athlete')
+    try {
 
-    if (req.method === 'GET') {
-        const {
-            id
-        } = req.query
-        const query = `select * from athletes where athlete_id = ${id}`
+        if (req.method === 'DELETE') {
 
-        await pool.query(query).then(response => {
+            const {
+                id
+            } = req.query
 
-            res.status(200).json(response.rows[0])
+            const query = `DELETE FROM athletes WHERE athlete_id = $1`
 
-        }).catch(err => {
+            await pool.query(query, [id]).then(response => res.send('delete succeeded'))
 
-            res.send(300)
-            console.log(err.message)
-            // throw err
+        }
 
-        })
-    } else res.send(405)
+        else if (req.method === 'GET') {
+
+            const {
+                id
+            } = req.query
+            const query = `select * from athletes where athlete_id = ${id}`
+
+            await pool.query(query).then(response => {
+
+                res.status(200).json(response.rows[0])
+
+            }).catch(err => {
+
+                res.send(300)
+                console.log(err.message)
+                // throw err
+
+            })
+
+        } else res.send(405)
+    } catch (err) {
+        console.log(err)
+        res.send('error in athletes/[id]')
+    }
 }

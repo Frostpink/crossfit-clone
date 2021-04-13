@@ -2,6 +2,11 @@
 
 
 import pool from '@pool'
+import * as yup from 'yup'
+
+const competitionId = yup.object().shape({
+    competition: yup.number().required(),
+})
 
 // Accepts the array and key
 const groupBy = (array, key) => {
@@ -34,9 +39,14 @@ export default async (req, res) => {
     if (req.method === 'GET') {
         // const query = `select competition_name, event_name, athlete_name, leaderboard.rank leaderboard_rank, scores.rank event_rank, leaderboard.points leaderboard_points 
                     //    from leaderboard inner join scores using(competition_name, athlete_name)`
-        const query = `select competition_name, rank event_rank, athlete_name, result_score event_points, event_name from scores`
 
-        await pool.query(query).then(response => {
+        const {
+            competition
+        } = await competitionId.validate(req.query)
+
+        const query = `select competition_name, rank event_rank, athlete_name, result_score event_points, event_name from scores where competition_id = $1`
+
+        await pool.query(query, [competition]).then(response => {
 
             // const leaderboardGroupedByPerson = groupBy2(response.rows, 'athlete_name')
 

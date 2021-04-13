@@ -12,12 +12,12 @@
   - [x] in athletes
   - [x] in leaderboard
 - [x] fix migrations
-- [ ] register athletes to competitions
+- [x] register athletes to competitions
   - [x] api/simple ui
-  - [ ] searchable athlete
+  - [x] searchable athlete
   - [x] it's own page
 - [x] add athlete results
 - [ ] add events to competition
 - [x] make presentation
-- [ ] edit athlete
-- [ ] delete athlete
+- [x] edit athlete
+- [x] delete athlete

@@ -7,9 +7,34 @@ const athleteSort = yup.object().shape({
     sort: yup.string().default('name asc').oneOf(['name asc', 'name desc', 'age asc', 'age desc', 'gender asc', 'gender desc']).required()
 })
 
+const putProps = yup.object().shape({
+    athlete_id: yup.number().required(),
+    name: yup.string().required(),
+    gender: yup.string().required(),
+})
+
 export default async (req, res) => {
 
     try {
+
+        if (req.method === 'PUT') {
+            console.log(req.body)
+            const {
+                athlete_id,
+                name,
+                gender,
+            } = await putProps.validate(req.body)
+
+            console.log(athlete_id, name, gender)
+
+            const query = 'UPDATE athletes SET name = $1, gender = $2 WHERE athlete_id = $3'
+
+            await pool.query(query, [name, gender, athlete_id]).then(response => {
+                res.status(202).json(response.rows[0])
+            }).catch(err => {
+                throw err
+            })
+        }
 
         if (req.method === 'POST') {
             const {

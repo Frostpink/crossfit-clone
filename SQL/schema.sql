@@ -130,7 +130,7 @@ CREATE TABLE results (
     tie_break TEXT,
     secondary_tie_break TEXT,
     PRIMARY KEY (competition_id, event_name, athlete_id),
-    FOREIGN KEY (athlete_id) REFERENCES athletes(athlete_id),
+    FOREIGN KEY (athlete_id) REFERENCES athletes(athlete_id) on delete cascade,
     FOREIGN KEY (competition_id, event_name) REFERENCES events(competition_id, event_name)
 );
 
